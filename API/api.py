@@ -6,6 +6,7 @@ import psycopg as psycopg3
 import jwt
 from flask_bcrypt import Bcrypt
 import random
+from flask import request, jsonify
 from functools import wraps
 from config import Config
 
@@ -89,6 +90,28 @@ def db_connection():
 ##########################################################
 
 
+def staff_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if "Authorization" in request.headers:
+            token = request.headers["Authorization"].split(" ")[-1]
+
+        if not token:
+            return jsonify({"message": "Token is missing!"}), 401
+
+        try:
+            data = jwt.decode(token, Config.SECRET_KEY, algorithms=["HS256"])
+            if data["role"] != "staff":
+                return jsonify({"message": "Permission denied"}), 403
+        except Exception as e:
+            return jsonify({"message": "Token is invalid", "error": str(e)}), 401
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -130,55 +153,272 @@ def token_required(f):
     return decorated
 
 
-@app.route("/register-person", methods=["POST"])
-def register_person():
+# REGISTERS
+@app.route("/register-staff", methods=["POST"])
+def register_staff():
     data = flask.request.get_json()
     name = data.get("name")
     email = data.get("email")
     phone = data.get("phone")
     cc = data.get("cc")
     nif = data.get("nif")
-    password = data.get("password")
     gender = data.get("gender")
-    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+    password = data.get("password")
+    numero_docente = data.get("numero_docente")
+    salario = data.get("salario")
+    anos_servico = data.get("anos_servico")
+    active = data.get("active")
+    email_docente = data.get("email_docente")
 
-    if not name or not email or not phone or not cc or not nif or not gender:
+    if not all(
+        [
+            name,
+            email,
+            phone,
+            cc,
+            nif,
+            gender,
+            password,
+            numero_docente,
+            salario,
+            anos_servico,
+            email_docente,
+            active is not None,
+        ]
+    ):
         return flask.jsonify(
             {
                 "status": StatusCodes["api_error"],
-                "errors": "Name, email, and phone are required",
+                "errors": "Missing required fields",
                 "results": None,
             }
         )
 
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+
     conn = db_connection()
     cur = conn.cursor()
-    statement = """
-        INSERT INTO person (name, email_pessoal, cc, nif, gender, phone, password) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
-    values = (name, email, cc, nif, gender, phone, hashed_password)
 
     try:
-        cur.execute(statement, values)
+        cur.execute(
+            """
+            INSERT INTO person (name, email_pessoal, cc, nif, gender, phone, password, role)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
+        """,
+            (name, email, cc, nif, gender, phone, hashed_password, "staff"),
+        )
+        person_id = cur.fetchone()[0]
+        cur.execute(
+            """
+            INSERT INTO staff (numero_docente, email_docente,  salario, anos_servico, active, person_id)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """,
+            (numero_docente, email_docente, salario, anos_servico, active, person_id),
+        )
+
         conn.commit()
 
         access_token = jwt.encode(
             {
                 "username": email,
+                "role": "staff",
                 "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
             },
             Config.SECRET_KEY,
             algorithm="HS256",
         )
 
-        response = {
-            "status": StatusCodes["success"],
-            "results": {"access_token": access_token},
-        }
+        return flask.jsonify(
+            {
+                "status": StatusCodes["success"],
+                "results": {
+                    "access_token": access_token,
+                    "person_id": person_id,
+                    "numero_docente": numero_docente,
+                },
+            }
+        )
+
+    except Exception as error:
+        if conn:
+            conn.rollback()
+        logger.error(f"POST /register-staff - error: {error}")
+        return flask.jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": str(error),
+                "results": None,
+            }
+        )
+    finally:
+        if conn:
+            conn.close()
+
+
+@app.route("/register-student", methods=["POST"])
+@staff_required
+def register_student():
+    data = flask.request.get_json()
+    name = data.get("name")
+    email = data.get("email")
+    phone = data.get("phone")
+    cc = data.get("cc")
+    nif = data.get("nif")
+    gender = data.get("gender")
+    password = data.get("password")
+    numero_estudante = data.get("numero_estudante")
+    email_estudante = data.get("email_estudante")
+    average = data.get("average")
+
+    if not all(
+        [
+            name,
+            email,
+            phone,
+            cc,
+            nif,
+            gender,
+            password,
+            numero_estudante,
+            email_estudante,
+            average,
+        ]
+    ):
+        return flask.jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Missing required fields",
+                "results": None,
+            }
+        )
+
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute(
+            """
+            INSERT INTO person (name, email_pessoal, cc, nif, gender, phone, password, role)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
+        """,
+            (name, email, cc, nif, gender, phone, hashed_password, "student"),
+        )
+        person_id = cur.fetchone()[0]
+        cur.execute(
+            """
+            INSERT INTO students (numero_estudante,email_estudante, average, person_id)
+            VALUES (%s, %s, %s, %s)
+        """,
+            (numero_estudante, email_estudante, average, person_id),
+        )
+
+        conn.commit()
+
+        access_token = jwt.encode(
+            {
+                "username": email,
+                "role": "student",
+                "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
+            },
+            Config.SECRET_KEY,
+            algorithm="HS256",
+        )
+
+        return flask.jsonify(
+            {
+                "status": StatusCodes["success"],
+                "results": {
+                    "access_token": access_token,
+                    "person_id": person_id,
+                    "numero_estudante": numero_estudante,
+                },
+            }
+        )
+
+    except Exception as error:
+        if conn:
+            conn.rollback()
+        logger.error(f"POST /register-student - error: {error}")
+        return flask.jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": str(error),
+                "results": None,
+            }
+        )
+    finally:
+        if conn:
+            conn.close()
+
+
+# LOGINS
+
+
+@app.route("/login-staff", methods=["GET"])
+def login_staff():
+    data = flask.request.get_json()
+    email = data.get("email_docente")
+    password = data.get("password")
+
+    if not email or not password:
+        return flask.jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Email and password are required",
+                "results": None,
+            }
+        )
+
+    conn = db_connection()
+    cur = conn.cursor()
+    response = {}
+    try:
+        cur.execute("SELECT person_id FROM staff WHERE email_docente = %s", (email,))
+        id = cur.fetchone()[0]
+        if not id:
+            response = {
+                "status": StatusCodes["api_error"],
+                "errors": "Staff not found",
+                "results": None,
+            }
+        else:
+            cur.execute(
+                "SELECT name, password, email_pessoal FROM person WHERE id = %s", (id,)
+            )
+            rows = cur.fetchall()
+            name = rows[0][0]
+            hashed_password = rows[0][1]
+            email_pessoal = rows[0][2]
+            if bcrypt.check_password_hash(hashed_password, password):
+                access_token = jwt.encode(
+                    {
+                        "username": email_pessoal,
+                        "role": "staff",
+                        "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
+                    },
+                    Config.SECRET_KEY,
+                    algorithm="HS256",
+                )
+                response = {
+                    "status": StatusCodes["success"],
+                    "results": {"access_token": access_token},
+                    "message": f"Welcome {name}",
+                }
+            else:
+                response = {
+                    "status": StatusCodes["api_error"],
+                    "errors": "Password incorrect",
+                    "results": None,
+                }
     except (Exception, psycopg3.DatabaseError) as error:
-        logger.error(f"POST /register-person - error: {error}")
-        response = {"status": StatusCodes["internal_error"], "errors": str(error)}
+        response = {
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+        }
     finally:
         if conn is not None:
             conn.close()
@@ -186,10 +426,10 @@ def register_person():
     return flask.jsonify(response)
 
 
-@app.route("/login-person", methods=["GET"])
-def login_person():
+@app.route("/login-student", methods=["GET"])
+def login_student():
     data = flask.request.get_json()
-    email = data.get("email")
+    email = data.get("email_estudante")
     password = data.get("password")
 
     if not email or not password:
@@ -206,22 +446,28 @@ def login_person():
     response = {}
     try:
         cur.execute(
-            "SELECT name, password FROM person WHERE email_pessoal = %s", (email,)
+            "SELECT person_id FROM students WHERE email_estudante = %s", (email,)
         )
-        rows = cur.fetchall()
-        if not rows:
+        id = cur.fetchone()[0]
+        if not id:
             response = {
                 "status": StatusCodes["api_error"],
-                "errors": "User not found",
+                "errors": "Student not found",
                 "results": None,
             }
         else:
+            cur.execute(
+                "SELECT name, password, email_pessoal FROM person WHERE id = %s", (id,)
+            )
+            rows = cur.fetchall()
             name = rows[0][0]
             hashed_password = rows[0][1]
+            email_pessoal = rows[0][2]
             if bcrypt.check_password_hash(hashed_password, password):
                 access_token = jwt.encode(
                     {
-                        "username": email,
+                        "username": email_pessoal,
+                        "role": "student",
                         "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
                     },
                     Config.SECRET_KEY,
@@ -256,7 +502,6 @@ def view_person_info():
     username = flask.g.user
     conn = db_connection()
     cur = conn.cursor()
-    print(username)
     cur.execute(
         "SELECT name, phone, gender FROM person WHERE email_pessoal = %s", (username,)
     )
@@ -268,84 +513,6 @@ def view_person_info():
         "status": StatusCodes["success"],
         "errors": None,
         "results": {"user": username, "name": name, "phone": phone, "gender": gender},
-    }
-    return flask.jsonify(response)
-
-
-@app.route("/dbproj/user", methods=["PUT"])
-def login_user():
-    data = flask.request.get_json()
-    email = data.get("email")
-    password = data.get("password")
-
-    if not email or not password:
-        return flask.jsonify(
-            {
-                "status": StatusCodes["api_error"],
-                "errors": "Username and password are required",
-                "results": None,
-            }
-        )
-
-    resultAuthToken = "Sample token, should be random!"  # TODO: use JWT
-
-    response = {
-        "status": StatusCodes["success"],
-        "errors": None,
-        "results": resultAuthToken,
-    }
-    return flask.jsonify(response)
-
-
-@app.route("/dbproj/register/student", methods=["POST"])
-@token_required
-def register_student():
-    data = flask.request.get_json()
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
-
-    if not username or not email or not password:
-        return flask.jsonify(
-            {
-                "status": StatusCodes["api_error"],
-                "errors": "Username, email, and password are required",
-                "results": None,
-            }
-        )
-
-    resultUserId = random.randint(1, 200)
-    response = {
-        "status": StatusCodes["success"],
-        "errors": None,
-        "results": resultUserId,
-    }
-    return flask.jsonify(response)
-
-
-@app.route("/dbproj/register/staff", methods=["POST"])
-@token_required
-def register_staff():
-    data = flask.request.get_json()
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
-
-    if not username or not email or not password:
-        return flask.jsonify(
-            {
-                "status": StatusCodes["api_error"],
-                "errors": "Username, email, and password are required",
-                "results": None,
-            }
-        )
-
-    resultUserId = random.randint(1, 200)  # TODO
-
-    response = {
-        "status": StatusCodes["success"],
-        "errors": None,
-        "results": resultUserId,
     }
     return flask.jsonify(response)
 
