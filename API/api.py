@@ -377,27 +377,26 @@ def login_staff():
     cur = conn.cursor()
     response = {}
     try:
-        cur.execute("SELECT person_id FROM staff WHERE email_docente = %s", (email,))
-        id = cur.fetchone()[0]
-        if not id:
+        cur.execute(
+            " SELECT staff.person_id, person.name, person.password, person.email_pessoal FROM staff LEFT JOIN person ON staff.person_id = person.id WHERE staff.email_docente = %s",
+            (email,),
+        )
+        rows = cur.fetchall()
+        if not rows:
             response = {
                 "status": StatusCodes["api_error"],
                 "errors": "Staff not found",
                 "results": None,
             }
         else:
-            cur.execute(
-                "SELECT name, password, email_pessoal FROM person WHERE id = %s", (id,)
-            )
-            rows = cur.fetchall()
-            name = rows[0][0]
-            hashed_password = rows[0][1]
-            email_pessoal = rows[0][2]
+            name = rows[0][1]
+            hashed_password = rows[0][2]
+            email_pessoal = rows[0][3]
             if bcrypt.check_password_hash(hashed_password, password):
                 access_token = jwt.encode(
                     {
                         "username": email_pessoal,
-                        "role": "staff",
+                        "role": "student",
                         "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
                     },
                     Config.SECRET_KEY,
@@ -446,23 +445,20 @@ def login_student():
     response = {}
     try:
         cur.execute(
-            "SELECT person_id FROM students WHERE email_estudante = %s", (email,)
+            " SELECT students.person_id, person.name, person.password, person.email_pessoal FROM students LEFT JOIN person ON students.person_id = person.id WHERE students.email_estudante = %s",
+            (email,),
         )
-        id = cur.fetchone()[0]
-        if not id:
+        rows = cur.fetchall()
+        if not rows:
             response = {
                 "status": StatusCodes["api_error"],
                 "errors": "Student not found",
                 "results": None,
             }
         else:
-            cur.execute(
-                "SELECT name, password, email_pessoal FROM person WHERE id = %s", (id,)
-            )
-            rows = cur.fetchall()
-            name = rows[0][0]
-            hashed_password = rows[0][1]
-            email_pessoal = rows[0][2]
+            name = rows[0][1]
+            hashed_password = rows[0][2]
+            email_pessoal = rows[0][3]
             if bcrypt.check_password_hash(hashed_password, password):
                 access_token = jwt.encode(
                     {
