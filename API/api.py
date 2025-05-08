@@ -396,7 +396,7 @@ def login_staff():
                 access_token = jwt.encode(
                     {
                         "username": email_pessoal,
-                        "role": "student",
+                        "role": "staff",
                         "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
                     },
                     Config.SECRET_KEY,
