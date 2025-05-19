@@ -1,3 +1,6 @@
 .env
 log_file.log
-.vscode
+.vscode/
+node_modules/
+API/__pycache__/
+API/log_file.log
