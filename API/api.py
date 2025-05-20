@@ -490,6 +490,71 @@ def login_student():
             conn.close()
 
     return flask.jsonify(response)
+@app.route("/login-instructor", methods=["GET"])
+def login_instructor():
+    data = flask.request.get_json()
+    email = data.get("email_docente")
+    password = data.get("password")
+
+    if not email or not password:
+        return flask.jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Email and password are required",
+                "results": None,
+            }
+        )
+
+    conn = db_connection()
+    cur = conn.cursor()
+    response = {}
+    try:
+        cur.execute(
+            " SELECT staff.person_id, person.name, person.password, person.email_pessoal FROM staff LEFT JOIN person ON staff.person_id = person.id WHERE staff.email_docente = %s",
+            (email,),
+        )
+        rows = cur.fetchall()
+        if not rows:
+            response = {
+                "status": StatusCodes["api_error"],
+                "errors": "Staff not found",
+                "results": None,
+            }
+        else:
+            name = rows[0][1]
+            hashed_password = rows[0][2]
+            email_pessoal = rows[0][3]
+            if bcrypt.check_password_hash(hashed_password, password):
+                access_token = jwt.encode(
+                    {
+                        "username": email_pessoal,
+                        "role": "instructor",
+                        "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
+                    },
+                    Config.SECRET_KEY,
+                    algorithm="HS256",
+                )
+                response = {
+                    "status": StatusCodes["success"],
+                    "results": {"access_token": access_token},
+                    "message": f"Welcome {name}",
+                }
+            else:
+                response = {
+                    "status": StatusCodes["api_error"],
+                    "errors": "Password incorrect",
+                    "results": None,
+                }
+    except (Exception, psycopg3.DatabaseError) as error:
+        response = {
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+        }
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return flask.jsonify(response)
 
 
 @app.route("/person-info", methods=["GET"])
@@ -511,7 +576,33 @@ def view_person_info():
         "results": {"user": username, "name": name, "phone": phone, "gender": gender},
     }
     return flask.jsonify(response)
-
+@app.route("/top-students", methods=["GET"])
+def show_top_students():
+    conn = db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        " SELECT students.person_id, person.name, students.average FROM students LEFT JOIN person ON students.person_id = person.id ORDER BY average DESC LIMIT 3"  
+    )
+    rows = cur.fetchall()
+    if not rows:
+        response = {
+            "status": StatusCodes["api_error"],
+            "errors": "Student not found",
+            "results": None,
+        }
+    else:
+        person_id = [rows[0][0], rows[1][0], rows[2][0]]
+        person_name =[rows[0][1], rows[1][1], rows[2][1]]
+        person_average=[rows[0][2], rows[1][2], rows[2][2]]
+        
+        response = {
+            "Top 3": [
+                {"Name": person_name[0], "Average": person_average[0]},
+                {"Name": person_name[1], "Average": person_average[1]},
+                {"Name": person_name[2], "Average": person_average[2]}
+                ]
+            }
+    return flask.jsonify(response)
 @app.route("/register-instructor", methods=["POST"])
 @staff_required
 def register_instructor():
