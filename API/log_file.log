@@ -787,3 +787,286 @@ INFO:werkzeug:127.0.0.1 - - [07/May/2025 20:54:12] "GET /login-student HTTP/1.1"
 INFO:werkzeug:127.0.0.1 - - [07/May/2025 20:54:17] "GET /login-staff HTTP/1.1" 200 -
 INFO:logger:API stubs online: http://127.0.0.1:8080
 INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 110-194-954
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1dHNAZ21haWwuY29tIiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ2NjUyODc4fQ.DonDmrjhA5NT2h86PlkdgPd4XuRIfz20HNyhUJVdojM
+INFO:werkzeug:127.0.0.1 - - [07/May/2025 21:00:05] "GET /person-info HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 110-194-954
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:11:31] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:11:37] "GET /login-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 110-194-954
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:14:18] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:14:23] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:14:31] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:14:39] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 00:14:45] "GET /login-staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:12:36] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:12:46] "GET /login-student HTTP/1.1" 200 -
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1dHNAZ21haWwuY29tIiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ2NjUyODc4fQ.DonDmrjhA5NT2h86PlkdgPd4XuRIfz20HNyhUJVdojM
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:12:55] "[31m[1mGET /person-info HTTP/1.1[0m" 401 -
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdyaWZmaXRoQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiZXhwIjoxNzQ2NzA0NTY2fQ.fXrq1ZMsXK_SZvgnQ9-IOLq8TRxVchZ5XsrmsqWwuQI
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:13:04] "GET /person-info HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:16:52] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:17:26] "[31m[1mPOST /login-staff HTTP/1.1[0m" 405 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:24:02] "[31m[1mPOST /register-student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:24:08] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:24:17] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:24:22] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:24:40] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:25:03] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:25:09] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:25:18] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:25:32] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:26:00] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:26:30] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:26:46] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:27:51] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:28:02] "POST /register-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:28:14] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:28:24] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:39:50] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:40:03] "POST /register-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:42:43] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:43:09] "GET /login-staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:46:31] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:46:50] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:46:55] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:47:10] "POST /register-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:47:38] "[31m[1mPOST /register-student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:47:55] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 11:51:47] "GET /login-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 101-185-546
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:08:14] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:10:56] "GET /login-student HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(98724198421, 12345, guts@gmail.com, +351 123 123 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:11:19] "POST /register-staff HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(98724198421, 12345, guts@gmail.com, +351 123 123 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:11:38] "POST /register-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:12:06] "[31m[1mPOST /register-student HTTP/1.1[0m" 403 -
+ERROR:logger:POST /register-student - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(99998521, 999999, zodd@gmail.com, +351 969 696 961) already exists.
+INFO:werkzeug:127.0.0.1 - - [08/May/2025 12:12:14] "POST /register-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 538-859-744
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 09:39:42] "[35m[1mGET /login-student HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 09:40:27] "[35m[1mGET /login-student HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 09:41:11] "GET /login-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:09:06] "GET /login-student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:23:59] "GET /login-student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:24:37] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:24:46] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:27:09] "POST /register-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:27:42] "GET /login-staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:33:04] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:35:44] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:36:24] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:37:31] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:38:38] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:38:54] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:39:49] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:39:56] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:46:50] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:46:54] "[33mPOST /register-instructor/%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:47:31] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:49:28] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:49:45] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:56:38] "[33mPOST /register-instructor%0A HTTP/1.1[0m" 404 -
+ERROR:logger:POST /register-instructor - error: new row for relation "person" violates check constraint "valid_role"
+DETAIL:  Failing row contains (25, behelit, 58724198421, 13345, behelit@yahoo.com, +351 201 123 123, M, $2b$12$zKs79Mp8zTpYUwH5mX1d2uzpEkHoHmU.nyf8czr8Qqcx//3UBmAq6, instructor).
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:56:58] "POST /register-instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:59:22] "POST /register-instructor HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
