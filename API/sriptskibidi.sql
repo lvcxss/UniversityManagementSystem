@@ -137,7 +137,11 @@ CREATE TABLE edition_practical_assistant_inst_course_self (
 	epaaicsicsp1 INTEGER NOT NULL,
 	PRIMARY KEY(epaaicsicsp,epaaicsicsp1)
 );
-
+CREATE TABLE instructors (
+    instructor_person_id INTEGER,
+    area VARCHAR(64), 
+    PRIMARY KEY(instructor_person_id)
+);
 CREATE TABLE students_degree (
 	students_person_id INTEGER,
 	degree_id		 INTEGER,

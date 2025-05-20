@@ -1070,3 +1070,385 @@ INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:56:58] "POST /register-instructor HT
 INFO:werkzeug:127.0.0.1 - - [20/May/2025 11:59:22] "POST /register-instructor HTTP/1.1" 200 -
 INFO:logger:API stubs online: http://127.0.0.1:8080
 INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 13:34:18] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 13:36:30] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:06:11] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:06:17] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:06:43] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:06:49] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:06:53] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:09:23] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:09:29] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:09:34] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:09:41] "[33mPOST /register-student HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:10:32] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:10:42] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:11:27] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:11:51] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:11:57] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:12:21] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:13:29] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:13:41] "[33mGET /login-staff HTTP/1.1[0m" 404 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:15:07] "GET /login-staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:16:49] "GET /login-staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:17:05] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:17:51] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:17:56] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register/student - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(99998521, 999999, uczodd@student.uc.pt, uczodd@student.uc.pt, +351 969 696 961) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 15:19:48] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:06:56] "[31m[1mPOST /dbproj/register/instructor HTTP/1.1[0m" 401 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:20:26] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:20:30] "[31m[1mPOST /dbproj/register/instructor HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:20:43] "[31m[1mPOST /dbproj/register/instructor HTTP/1.1[0m" 401 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+ERROR:logger:POST /register-staff - error: object of type 'int' has no len()
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:22:44] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:26:48] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:27:06] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:30:42] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: object of type 'int' has no len()
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:30:50] "POST /dbproj/register/staff HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: object of type 'int' has no len()
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:31:38] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:44:48] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:46:13] "[31m[1mPOST /dbproj/register/degree HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:46:36] "[35m[1mPOST /dbproj/register/degree HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:47:28] "[35m[1mPOST /dbproj/register/degree HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:48:19] "[33mGET /person-info HTTP/1.1[0m" 404 -
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:48:27] "GET /dbproj/person-info HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:48:53] "GET /dbproj/person-info HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:49:48] "[35m[1mPOST /dbproj/register/degree HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:51:27] "[35m[1mPOST /dbproj/register/degree HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: syntax error at or near "FROM"
+LINE 1: SELECT id, FROM person WHERE email_institucional = $1
+                   ^
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:55:18] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: null value in column "id" of relation "degree" violates not-null constraint
+DETAIL:  Failing row contains (null, compsci, 1000, skibidism, 14).
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:55:46] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: insert or update on table "degree" violates foreign key constraint "degree_fk1"
+DETAIL:  Key (admin_staff_person_id)=(14) is not present in table "staff".
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 16:57:47] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: Object of type set is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:03:04] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: Object of type set is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:03:17] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: Object of type set is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:04:23] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: Object of type set is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:13:04] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+ERROR:logger:POST /register/degree - error: Object of type set is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:16:18] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVjMjAyMDEyMzQ1QHVjLnB0Iiwicm9sZSI6InN0YWZmIiwiZXhwIjoxNzQ3NzYxMjg4fQ.itY4DPioJgl4pcmtrFtD0i3-hKGN7dLCr0gqy2QqjnA
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:16:41] "POST /dbproj/register/degree HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+ERROR:logger:POST /register-staff - error: object of type 'int' has no len()
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:18:45] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:21:48] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:21:57] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(98724198421, 1234566, behelita@gmail.com, behelita23@uc.pt, +351 123 666 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:22:01] "POST /dbproj/register/staff HTTP/1.1" 200 -
+ERROR:logger:POST /register-instructor - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(5221, 92514, behelit2@skbi.com, behelitternings@uc.pt, +351 201 323 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:22:05] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:22:19] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:22:23] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:23:01] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:32:00] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:32:29] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:32:47] "[31m[1mPOST /dbproj/register/instructor HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:33:05] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /register-instructor - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(5221, 92514, behelit2@skbi.com, behelitternings@uc.pt, +351 201 323 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:33:28] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:33:36] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register/student - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(6668524211, 966199, sgiadm@gmail.com, uc993949@uc.pt, +351 969 446 999) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:33:39] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(98724198421, 1234566, behelita@gmail.com, behelita23@uc.pt, +351 123 666 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:33:46] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:34:27] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /register-instructor - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(5221, 92514, behelit2@skbi.com, behelitternings@uc.pt, +351 201 323 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:34:35] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+ERROR:logger:POST /register/student - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(6668524211, 966199, sgiadm@gmail.com, uc993949@uc.pt, +351 969 446 999) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:34:44] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "infounica"
+DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(98724198421, 1234566, behelita@gmail.com, behelita23@uc.pt, +351 123 666 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:34:56] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
