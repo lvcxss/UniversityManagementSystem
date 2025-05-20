@@ -623,115 +623,58 @@ def register_instructor():
         if conn:
             conn.close()
 
-
-
-@app.route("/register-instructor", methods=["POST"])
-@staff_required
-def register_instructor():
-    data = flask.request.get_json()
-    name = data.get("name")
-    email = data.get("email")
-    phone = data.get("phone")
-    cc = data.get("cc")
-    nif = data.get("nif")
-    password = data.get("password")
-    gender = data.get("gender")
-    email_docente = data.get("email_docente")
-    numero_docente = data.get("numero_docente")
-    salario = data.get("salario")
-    anos_servico = data.get("anos_servico")
-    active = data.get("active")
-    area = data.get("area")
-
-    if not all(
-        [
-            name,
-            email,
-            phone,
-            cc,
-            nif,
-            gender,
-            password,
-            numero_docente,
-            email_docente,
-            salario,
-            anos_servico,
-            active,
-            area,
-        ]
-    ):
-        return flask.jsonify(
-            {
-                "status": StatusCodes["api_error"],
-                "errors": "Missing required fields",
-                "results": None,
-            }
-        )
-
-    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-
+@app.route("/report", methods=["GET"])
+def generate_report():  # Renamed from register_instructor for clarity
     conn = db_connection()
     cur = conn.cursor()
 
     try:
-        cur.execute(
-            """
-            INSERT INTO person (name, email_pessoal, cc, nif, gender, phone, password, role)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING id
-            """,
-            (name, email, cc, nif, gender, phone, hashed_password, "instructor"),
-        )
-        person_id = cur.fetchone()[0]
-        cur.execute(
-            """
-            INSERT INTO employee (numero_docente, email_docente,  salario, anos_servico, active, person_id)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """,
-            (numero_docente, email_docente, salario, anos_servico, active, person_id),
-        )
-        cur.execute(
-            """
-            INSERT INTO instructors (instructor_person_id, area)
-            VALUES( %s, %s)
-            """,
-            (person_id, area),
-        )
+        # Execute the best student query
+        cur.execute("""
+            WITH ranked_students AS (
+                SELECT 
+                    p.district,
+                    s.person_id,
+                    s.average,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY p.district 
+                        ORDER BY s.average DESC
+                    ) AS rank
+                FROM students s
+                JOIN person p 
+                    ON s.person_id = p.id
+            )
+            SELECT 
+                district,
+                person_id,
+                average
+            FROM ranked_students
+            WHERE rank = 1;
+        """)
 
-        conn.commit()
+        # Format results
+        results = []
+        for row in cur.fetchall():
+            results.append({
+                "district": row[0],
+                "best_student_id": row[1],
+                "highest_average": float(row[2])  # Convert decimal to float for JSON
+            })
 
-        access_token = jwt.encode(
-            {
-                "username": email,
-                "role": "instructor",
-                "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
-            },
-            Config.SECRET_KEY,
-            algorithm="HS256",
-        )
-
-        return flask.jsonify(
-            {
-                "status": StatusCodes["success"],
-                "results": {
-                    "access_token": access_token,
-                    "person_id": person_id,
-                    "numero_docente": numero_docente,
-                },
-            }
-        )
+        return flask.jsonify({
+            "status": StatusCodes["success"],
+            "results": results
+        })
 
     except Exception as error:
         if conn:
             conn.rollback()
-        logger.error(f"POST /register-instructor - error: {error}")
-        return flask.jsonify(
-            {
-                "status": StatusCodes["internal_error"],
-                "errors": str(error),
-                "results": None,
-            }
-        )
+        logger.error(f"GET /report - error: {error}")
+        return flask.jsonify({
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+            "results": None
+        })
     finally:
         if conn:
             conn.close()
