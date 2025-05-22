@@ -1452,3 +1452,339 @@ DETAIL:  Key (nif, cc, email_pessoal, email_institucional, phone)=(98724198421, 
 INFO:werkzeug:127.0.0.1 - - [20/May/2025 17:34:56] "POST /dbproj/register/staff HTTP/1.1" 200 -
 INFO:logger:API stubs online: http://127.0.0.1:8080
 INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 18:56:49] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 18:56:54] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 18:58:34] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlaGVsaXRhMjNAdWMucHQiLCJyb2xlIjoic3RhZmYiLCJleHAiOjE3NDc3NjkyMTR9.h0VCjdSTvSctNdkOUhmXfrYjF7UZngBjEYb20ZHqCjM
+INFO:logger:Degree enrollment: student=46, degree=35, staff_id=42
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 18:59:14] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlaGVsaXRhMjNAdWMucHQiLCJyb2xlIjoic3RhZmYiLCJleHAiOjE3NDc3NjkyMTR9.h0VCjdSTvSctNdkOUhmXfrYjF7UZngBjEYb20ZHqCjM
+ERROR:logger:POST /enroll_degree error: duplicate key value violates unique constraint "students_degree_pkey"
+DETAIL:  Key (students_person_id, degree_id)=(46, 35) already exists.
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 19:01:02] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:logger:Degree enrollment: student=27, degree=35, staff_id=42
+INFO:werkzeug:127.0.0.1 - - [20/May/2025 19:03:37] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:33:25] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:33:29] "[31m[1mPOST /dbproj/enroll_activity/129 HTTP/1.1[0m" 401 -
+ERROR:logger:POST /enroll_activity error: the query has 3 placeholders but 2 parameters were passed
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:33:40] "[35m[1mPOST /dbproj/enroll_activity/129 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 238-106-467
+ERROR:logger:POST /enroll_activity error: insert or update on table "students_activity" violates foreign key constraint "activity_id_fk"
+DETAIL:  Key (activity_id)=(129) is not present in table "activity".
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:34:25] "[35m[1mPOST /dbproj/enroll_activity/129 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_activity error: column d.id does not exist
+LINE 3:   WHERE d.id = NEW.activity_id
+                ^
+QUERY:  SELECT d.cost
+                    FROM activity d
+  WHERE d.id = NEW.activity_id
+CONTEXT:  PL/pgSQL function create_invoice_activity() line 5 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:35:31] "[35m[1mPOST /dbproj/enroll_activity/129 HTTP/1.1[0m" 500 -
+INFO:logger:Degree enrollment: student=46, activity=129
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 11:37:13] "POST /dbproj/enroll_activity/129 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:23:35] "[35m[1mPOST /dbproj/register/staff HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:26:01] "POST /dbproj/register/staff HTTP/1.1" 200 -
+ERROR:logger:POST /register-staff - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(98724198421, 1234566, behelita@gmail.com, +351 123 666 123) already exists.
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:26:06] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:30:25] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:30:33] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register-instructor - error: relation "instructors" does not exist
+LINE 2:             INSERT INTO instructors (instructor_person_id, a...
+                                ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:30:43] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+ERROR:logger:POST /register-instructor - error: relation "instructors" does not exist
+LINE 2:             INSERT INTO instructors (instructor_person_id, a...
+                                ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:37:56] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+ERROR:logger:POST /register-instructor - error: relation "instructors" does not exist
+LINE 2:             INSERT INTO instructors (instructor_person_id, a...
+                                ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:38:00] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:38:09] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:38:39] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_degree error: column "staff_id" of relation "students_degree" does not exist
+LINE 2: ...TO students_degree (students_person_id, degree_id, staff_id)
+                                                              ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:39:52] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_degree error: insert or update on table "students_degree" violates foreign key constraint "students_degree_fk2"
+DETAIL:  Key (degree_id)=(35) is not present in table "degree".
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:41:01] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_degree error: column d.fee does not exist
+LINE 1: SELECT d.fee
+               ^
+QUERY:  SELECT d.fee
+                    FROM degree d
+  WHERE d.id = NEW.degree_id
+CONTEXT:  PL/pgSQL function create_invoice_degree() line 5 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:41:35] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_degree error: function uuid() does not exist
+LINE 3:    UUID(),
+           ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+QUERY:  INSERT INTO invoices(id,students_id, staff_id,cost)
+  VALUES (
+  	UUID(),
+    NEW.students_id,
+    NEW.staff_id,
+    v_amount
+  )
+CONTEXT:  PL/pgSQL function create_invoice_degree() line 10 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:42:14] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_degree error: record "new" has no field "students_id"
+CONTEXT:  SQL statement "INSERT INTO invoices(students_id, staff_id,cost)
+  VALUES (
+    NEW.students_id,
+    NEW.staff_id,
+    v_amount
+  )"
+PL/pgSQL function create_invoice_degree() line 10 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:50:32] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_degree error: column "students_person_id" of relation "students_degree" does not exist
+LINE 2:             INSERT INTO students_degree (students_person_id,...
+                                                 ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:52:02] "[35m[1mPOST /dbproj/enroll_degree/35 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+INFO:logger:Degree enrollment: student=11, degree=35, staff_id=9
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 20:52:45] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:03:52] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:03:59] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_activity error: column "students_person_id" of relation "students_activity" does not exist
+LINE 2:             INSERT INTO students_activity (students_person_i...
+                                                   ^
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:04:09] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 103-648-953
+ERROR:logger:POST /enroll_activity error: record "new" has no field "staff_id"
+CONTEXT:  SQL statement "INSERT INTO invoices(students_id, staff_id, cost)
+  VALUES (
+    NEW.students_id,
+    NEW.staff_id,
+    NEW.degree_id,
+    v_amount
+  )"
+PL/pgSQL function create_invoice_activity() line 10 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:04:35] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_activity error: INSERT has more expressions than target columns
+LINE 5:     v_amount
+            ^
+QUERY:  INSERT INTO invoices(students_id,  cost)
+  VALUES (
+    NEW.students_id,
+    NEW.activity_id,
+    v_amount
+  )
+CONTEXT:  PL/pgSQL function create_invoice_activity() line 10 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:05:36] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_activity error: column "activity_id" of relation "invoices" does not exist
+LINE 1: INSERT INTO invoices(students_id, activity_id, cost)
+                                          ^
+QUERY:  INSERT INTO invoices(students_id, activity_id, cost)
+  VALUES (
+    NEW.students_id,
+    NEW.activity_id,
+    v_amount
+  )
+CONTEXT:  PL/pgSQL function create_invoice_activity() line 10 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:06:15] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+INFO:logger:Degree enrollment: student=11, activity=1
+INFO:werkzeug:127.0.0.1 - - [21/May/2025 21:06:42] "POST /dbproj/enroll_activity/1 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 12:49:58] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 15:59:58] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:00:02] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:00:08] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:00:46] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:00:50] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:01:03] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:02:06] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:02:13] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:02:35] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_activity error: invalid input syntax for type integer: "ucfreakyahh@uc.pt"
+CONTEXT:  unnamed portal parameter $1 = '...'
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:02:40] "[35m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 16:03:34] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 21:46:56] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:Degree enrollment: student=16, activity=1
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 22:07:33] "POST /dbproj/enroll_activity/1 HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_activity error: duplicate key value violates unique constraint "students_activity_pkey"
+DETAIL:  Key (activity_id, students_id)=(1, 16) already exists.
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 22:11:11] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 22:11:37] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_activity error: duplicate key value violates unique constraint "students_activity_pkey"
+DETAIL:  Key (activity_id, students_id)=(1, 16) already exists.
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 22:11:41] "[35m[1mPOST /dbproj/enroll_activity/1 HTTP/1.1[0m" 500 -
+INFO:logger:Degree enrollment: student=16, activity=1
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 22:12:21] "POST /dbproj/enroll_activity/1 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+ERROR:logger:PUT /dbproj/user - error: Object of type builtin_function_or_method is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:15:18] "[35m[1mPUT /dbproj/user HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:15:27] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+ERROR:logger:PUT /dbproj/user - error: Object of type builtin_function_or_method is not JSON serializable
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:15:32] "[35m[1mPUT /dbproj/user HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:16:59] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:17:04] "[31m[1mDELETE /dbproj/delete_details/16 HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:17:11] "[35m[1mDELETE /dbproj/delete_details/16 HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:18:30] "[35m[1mDELETE /dbproj/delete_details/16 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:18:57] "[31m[1mDELETE /dbproj/delete_details/16 HTTP/1.1[0m" 400 -
+INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:19:53] "[35m[1mDELETE /dbproj/delete_details/11 HTTP/1.1[0m" 204 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080

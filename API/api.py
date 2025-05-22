@@ -103,6 +103,7 @@ def staff_required(f):
 
         try:
             data = jwt.decode(token, Config.SECRET_KEY, algorithms=["HS256"])
+            flask.g.user = data["username"]
             if data["role"] != "staff":
                 return jsonify({"message": "Permission denied"}), 403
         except Exception as e:
@@ -125,6 +126,8 @@ def student_required(f):
 
         try:
             data = jwt.decode(token, Config.SECRET_KEY, algorithms=["HS256"])
+            flask.g.user = data["username"]
+
             if data["role"] != "student":
                 return jsonify({"message": "Permission denied"}), 403
         except Exception as e:
@@ -407,7 +410,7 @@ def register_student():
 
 
 @app.route("/dbproj/register/degree", methods=["POST"])
-@token_required
+@staff_required
 def register_degree():
     username = flask.g.user
     data = flask.request.get_json()
@@ -698,14 +701,14 @@ def view_person_info():
 @app.route("/dbproj/enroll_degree/<int:degree_id>", methods=["POST"])
 @staff_required
 def enroll_degree(degree_id):
-    data = request.get_json() or {}
+    username = flask.g.user
+    data = request.get_json()
     student_id = data.get("student_id")
-    date_str = data.get("date")
-    if not student_id or not date_str:
+    if not student_id or not degree_id:
         return jsonify(
             {
                 "status": StatusCodes["api_error"],
-                "errors": "campos 'student_id' e 'date' são obrigatórios",
+                "errors": "campo 'student_id' é obrigatórios",
             }
         ), 400
 
@@ -714,14 +717,20 @@ def enroll_degree(degree_id):
     try:
         cur.execute(
             """
-            INSERT INTO students_degree (students_person_id, degree_id)
-            VALUES (%s, %s)
-        """,
-            (student_id, degree_id),
+            SELECT id from person WHERE email_institucional = %s
+            """,
+            (username,),
         )
-
+        staff_id = cur.fetchone()[0]
+        cur.execute(
+            """
+            INSERT INTO students_degree (students_id, degree_id, staff_id)
+            VALUES (%s, %s, %s)
+        """,
+            (student_id, degree_id, staff_id),
+        )
         logger.info(
-            f"Degree enrollment: student={student_id}, degree={degree_id}, date={date_str}"
+            f"Degree enrollment: student={student_id}, degree={degree_id}, staff_id={staff_id}"
         )
 
         conn.commit()
@@ -733,6 +742,108 @@ def enroll_degree(degree_id):
         return jsonify({"status": StatusCodes["internal_error"], "errors": str(e)}), 500
     finally:
         conn.close()
+
+
+@app.route("/dbproj/enroll_activity/<int:activity_id>", methods=["POST"])
+@student_required
+def enroll_activity(activity_id):
+    username = flask.g.user
+    if not activity_id:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Insira o id da atividade no link",
+            }
+        ), 400
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            SELECT id from person WHERE email_institucional = %s
+            """,
+            (username,),
+        )
+        student_id = cur.fetchone()[0]
+        cur.execute(
+            """
+            INSERT INTO students_activity (students_id, activity_id)
+            VALUES (%s, %s)
+        """,
+            (student_id, activity_id),
+        )
+        logger.info(f"Degree enrollment: student={student_id}, activity={activity_id}")
+
+        conn.commit()
+        return jsonify({"status": StatusCodes["success"], "errors": None}), 200
+
+    except Exception as e:
+        conn.rollback()
+        logger.error(f"POST /enroll_activity error: {e}")
+        return jsonify({"status": StatusCodes["internal_error"], "errors": str(e)}), 500
+    finally:
+        conn.close()
+
+
+@app.route("/enroll_course_edition/<int:course_edition_id>", methods=["POST"])
+@student_required
+def enroll_course_edition(course_edition_id):
+    data = request.get_json()
+    class_ids = data.get("classes", [])
+    student_id = flask.g.user
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+                SELECT * FROM enroll_course_edition(%s, %s, %s);
+                """,
+            (student_id, course_edition_id, class_ids),
+        )
+        conn.commit()
+        return jsonify({"status": StatusCodes["success"], "errors": None}), 200
+
+    except Exception as e:
+        conn.rollback()
+        logger.error(f"POST /enroll_activity error: {e}")
+        return jsonify({"status": StatusCodes["internal_error"], "errors": str(e)}), 500
+    finally:
+        conn.close()
+
+
+@app.route("/dbproj/delete_details/<int:student_id>", methods=["DELETE"])
+@staff_required
+def delete_details(student_id):
+    conn = db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        DELETE FROM public.person
+         WHERE id = %s
+           AND role = 'student'
+        RETURNING id;
+    """,
+        (student_id,),
+    )
+
+    deleted = cur.fetchone()
+    if not deleted:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "o id deverá ser ed um student",
+            }
+        ), 400
+
+    conn.commit()
+    return jsonify(
+        {
+            "status": StatusCodes["success"],
+            "errors": None,
+        }
+    ), 204
 
 
 if __name__ == "__main__":
