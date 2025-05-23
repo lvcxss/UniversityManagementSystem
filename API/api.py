@@ -211,7 +211,7 @@ def register_staff():
         person_id = cur.fetchone()[0]
         cur.execute(
             """
-            INSERT INTO staff (numero_docente, email_docente,  salario, anos_servico, active, person_id)
+            INSERT INTO employee (numero_docente, email_docente,  salario, anos_servico, active, person_id)
             VALUES (%s, %s, %s, %s, %s, %s)
         """,
             (numero_docente, email_docente, salario, anos_servico, active, person_id),
@@ -378,7 +378,7 @@ def login_staff():
     response = {}
     try:
         cur.execute(
-            " SELECT staff.person_id, person.name, person.password, person.email_pessoal FROM staff LEFT JOIN person ON staff.person_id = person.id WHERE staff.email_docente = %s",
+            " SELECT employee.person_id, person.name, person.password, person.email_pessoal FROM employee LEFT JOIN person ON employee.person_id = person.id WHERE employee.email_docente = %s",
             (email,),
         )
         rows = cur.fetchall()
@@ -623,6 +623,103 @@ def register_instructor():
         if conn:
             conn.close()
 
+@app.route("/top_by_district", methods=["GET"])
+def generate_top_by_district():  # Renamed from register_instructor for clarity
+    conn = db_connection()
+    cur = conn.cursor()
+
+    try:
+        # Execute the best student query
+        cur.execute("""
+            WITH ranked_students AS (
+                SELECT 
+                    p.district,
+                    s.person_id,
+                    s.average,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY p.district 
+                        ORDER BY s.average DESC
+                    ) AS rank
+                FROM students s
+                JOIN person p 
+                    ON s.person_id = p.id
+            )
+            SELECT 
+                district,
+                person_id,
+                average
+            FROM ranked_students
+            WHERE rank = 1;
+        """)
+
+        # Format results
+        results = []
+        for row in cur.fetchall():
+            results.append({
+                "district": row[0],
+                "best_student_id": row[1],
+                "highest_average": float(row[2])  # Convert decimal to float for JSON
+            })
+
+        return flask.jsonify({
+            "status": StatusCodes["success"],
+            "results": results
+        })
+
+    except Exception as error:
+        if conn:
+            conn.rollback()
+        logger.error(f"GET /top_by_district - error: {error}")
+        return flask.jsonify({
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+            "results": None
+        })
+    finally:
+        if conn:
+            conn.close()
+
+
+@app.route("/report", methods=["GET"])
+def generate_report():  # Renamed from register_instructor for clarity
+    conn = db_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute("""
+        SELECT ep.ano AS ano, COUNT(*) AS passed_students_count FROM edition_stats es
+        JOIN students_degree sd ON es.students_person_id = sd.students_person_id 
+        JOIN degree dg ON dg.id = sd.degree_id 
+        JOIN edition_practical_assistant_instructors_course ep ON ep.instructors_class_epaaicsicsp = dg.epaaicsicsp 
+        WHERE es.passed = TRUE
+        GROUP BY ep.ano;
+        """)
+
+        # Format results
+        results = []
+        for row in cur.fetchall():
+            results.append({
+                "edição": row[0],
+                "numero": row[1]
+            })
+
+        return flask.jsonify({
+            "status": StatusCodes["success"],
+            "results": results
+        })
+
+    except Exception as error:
+        if conn:
+            conn.rollback()
+        logger.error(f"GET /report - error: {error}")
+        return flask.jsonify({
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+            "results": None
+        })
+    finally:
+        if conn:
+            conn.close()
 
 
 if __name__ == "__main__":
