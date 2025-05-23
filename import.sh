@@ -10,7 +10,7 @@ user="$2"
 [[ -z "$user" ]]      && user="postgres"
 
 for file in scripts/*.sql; do
-  psql -h localhost -p 5432 -d "$database" -U "$user" -a -q -f "$file"
+  psql -h localhost -p 5432 -d "$database" -U "$user" -q -f "$file" 
 done
 
 exit 0

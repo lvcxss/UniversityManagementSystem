@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS public.lesson
     theory_instructors_class_staff_person_id integer NOT NULL
 );
 
-ALTER TABLE public.person
+CREATE TABLE IF NOT EXISTS public.person
 (
     id serial NOT NULL,
     name character varying(128) COLLATE pg_catalog."default" NOT NULL,
