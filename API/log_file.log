@@ -1788,3 +1788,346 @@ INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:18:57] "[31m[1mDELETE /dbproj/dele
 INFO:werkzeug:127.0.0.1 - - [22/May/2025 23:19:53] "[35m[1mDELETE /dbproj/delete_details/11 HTTP/1.1[0m" 204 -
 INFO:logger:API stubs online: http://127.0.0.1:8080
 INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:37:02] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:37:07] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+ERROR:logger:POST /register/student - error: procedure proc_register_student(unknown, unknown, integer, bigint, unknown, unknown, unknown, unknown, unknown, smallint) does not exist
+LINE 1: CALL proc_register_student($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:42:06] "POST /dbproj/register/student HTTP/1.1" 200 -
+ERROR:logger:POST /register/student - error: procedure proc_register_student(unknown, unknown, integer, bigint, unknown, unknown, unknown, unknown, unknown, smallint) does not exist
+LINE 1: CALL proc_register_student($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:43:05] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+ERROR:logger:POST /register/student - error: procedure proc_register_student(text, text, bigint, bigint, text, text, text, text, text, real) does not exist
+LINE 2:         CALL proc_register_student(
+                     ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:47:03] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 00:57:26] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+ERROR:logger:POST /register-instructor - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(5221, 92514, behelit2@skbi.com, +351 201 323 123) already exists.
+CONTEXT:  SQL statement "INSERT INTO person (
+    name, email_pessoal, cc, nif,
+    gender, phone, password, role,
+    email_institucional
+  ) VALUES (
+    p_name, p_email_pessoal, p_cc, p_nif,
+    p_gender, p_phone, p_password, 'instructor',
+    p_email_inst
+  )
+  RETURNING id"
+PL/pgSQL function fn_register_instructor(text,text,bigint,bigint,text,text,text,text,text,real,integer,boolean,text) line 5 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 01:08:17] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 01:08:46] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 01:09:11] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:44:48] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:logger:Degree enrollment: student=18, degree=35, staff_id=9
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:44:53] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:45:20] "PUT /dbproj/user HTTP/1.1" 200 -
+ERROR:logger:POST /enroll_activity error: invalid input syntax for type integer: "ucgutsy@uc.pt"
+CONTEXT:  unnamed portal parameter $1 = '...'
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:45:27] "[35m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_activity error: invalid input syntax for type integer: "ucgutsy@uc.pt"
+CONTEXT:  unnamed portal parameter $1 = '...'
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:45:38] "[35m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 500 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:46:56] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:47:13] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:47:14] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:50:46] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:52:34] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:57:03] "POST /enroll_course_edition/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 10:58:13] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+ERROR:logger:POST /enroll_activity error: duplicate key value violates unique constraint "edition_stats_students_person_id_key"
+DETAIL:  Key (students_person_id)=(18) already exists.
+CONTEXT:  SQL statement "INSERT INTO edition_stats(students_person_id, edition_id, passed)
+  VALUES (p_student_person_id, p_edition_id, FALSE)
+  ON CONFLICT (students_person_id, edition_id) DO NOTHING"
+PL/pgSQL function enroll_course_edition(integer,integer,integer[]) line 128 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:17:04] "[35m[1mPOST /enroll_course_edition/4 HTTP/1.1[0m" 500 -
+ERROR:logger:POST /enroll_activity error: duplicate key value violates unique constraint "edition_stats_students_person_id_key"
+DETAIL:  Key (students_person_id)=(18) already exists.
+CONTEXT:  SQL statement "INSERT INTO edition_stats(students_person_id, edition_id, passed)
+  VALUES (p_student_person_id, p_edition_id, FALSE)
+  ON CONFLICT (students_person_id, edition_id) DO NOTHING"
+PL/pgSQL function enroll_course_edition(integer,integer,integer[]) line 128 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:17:43] "[35m[1mPOST /enroll_course_edition/4 HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:18:06] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:18:51] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:19:26] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:19:41] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:19:55] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:20:15] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+ERROR:logger:POST /register/student - error: duplicate key value violates unique constraint "person_nif_cc_email_pessoal_phone_key"
+DETAIL:  Key (nif, cc, email_pessoal, phone)=(21833248, 3223113, sk@skbu.com, +344 123 446 563) already exists.
+CONTEXT:  SQL statement "INSERT INTO person (
+    name, email_pessoal, cc, nif,
+    gender, phone, password, role,
+    email_institucional
+  )
+  VALUES (
+    p_name, p_email, p_cc, p_nif,
+    p_gender, p_phone, p_password, 'student',
+    p_email_inst
+  )
+  RETURNING id"
+PL/pgSQL function fn_register_student(text,text,bigint,bigint,text,text,text,text,text,real) line 5 at SQL statement
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:20:22] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:22:58] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:23:04] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:23:37] "POST /dbproj/register/staff HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:23:52] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:24:21] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:24:32] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:25:06] "POST /dbproj/register/instructor HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:25:22] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:25:30] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:25:44] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:26:12] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:26:31] "[33mPOST /dbproj/enroll_degree/ HTTP/1.1[0m" 404 -
+INFO:logger:Degree enrollment: student=26, degree=35, staff_id=25
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:26:55] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:27:21] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:27:30] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:27:31] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:27:32] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:31:19] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:31:22] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:32:04] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:32:23] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 400 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:32:32] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:34:42] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:34:57] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:34:58] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:37:47] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:40:25] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:40:29] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:51:45] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:51:46] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:51:48] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:52:18] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:53:37] "[31m[1mPUT /dbproj/user HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:53:41] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:53:51] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:55:10] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:56:58] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:57:06] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:57:51] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 400 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:57:59] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:58:23] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 11:58:24] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:logger:API stubs online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:11:09] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:11:19] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:11:22] "POST /dbproj/enroll_activity/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:12:51] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:13:18] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:13:29] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:14:06] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:14:16] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:14:44] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:17:59] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+DEBUG:api:enroll_course_edition payload: {'classes': [1]}
+DEBUG:api:enroll_course_edition db returned: ('error', 'Schedule conflict with existing classes')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:21:00] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 400 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:21:21] "[31m[1mPOST /dbproj/register/student HTTP/1.1[0m" 403 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:21:53] "[33mGET /login-staff HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:01] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:05] "PUT /dbproj/user HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:09] "POST /dbproj/register/student HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:17] "POST /dbproj/enroll_degree/35 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:33] "PUT /dbproj/user HTTP/1.1" 200 -
+DEBUG:api:enroll_course_edition payload: {'classes': [1, 3]}
+DEBUG:api:enroll_course_edition db returned: ('success', 'Student enrolled successfully')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:22:36] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+DEBUG:api:enroll_course_edition payload: {'classes': [1, 3]}
+DEBUG:api:enroll_course_edition db returned: ('success', 'Student enrolled successfully')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:25:30] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+DEBUG:api:enroll_course_edition payload: {'classes': [1, 3]}
+DEBUG:api:flask.g.person_id = 29
+DEBUG:api:course_edition_id = 3
+DEBUG:api:class_ids (raw) = [1, 3] / type = <class 'list'>
+DEBUG:api:enroll_course_edition db returned: ('success', 'Student enrolled successfully')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:27:54] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 130-849-397
+DEBUG:api:enroll_course_edition payload: {'classes': [1, 3]}
+DEBUG:api:flask.g.person_id = 29
+DEBUG:api:course_edition_id = 3
+DEBUG:api:class_ids (raw) = [1, 3] / type = <class 'list'>
+DEBUG:api:enroll_course_edition db returned: ('success', 'Student enrolled successfully')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:29:33] "POST /enroll_course_edition/3 HTTP/1.1" 200 -
+DEBUG:api:enroll_course_edition payload: {'classes': [1]}
+DEBUG:api:flask.g.person_id = 29
+DEBUG:api:course_edition_id = 3
+DEBUG:api:class_ids (raw) = [1] / type = <class 'list'>
+DEBUG:api:enroll_course_edition db returned: ('error', 'Schedule conflict with existing classes')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:29:45] "[31m[1mPOST /enroll_course_edition/3 HTTP/1.1[0m" 400 -
+DEBUG:api:enroll_course_edition payload: {'classes': [5]}
+DEBUG:api:flask.g.person_id = 29
+DEBUG:api:course_edition_id = 4
+DEBUG:api:class_ids (raw) = [5] / type = <class 'list'>
+DEBUG:api:enroll_course_edition db returned: ('success', 'Student enrolled successfully')
+INFO:werkzeug:127.0.0.1 - - [23/May/2025 12:29:51] "POST /enroll_course_edition/4 HTTP/1.1" 200 -
