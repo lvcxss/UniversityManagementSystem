@@ -491,7 +491,7 @@ def show_top_students():
     conn = db_connection()
     cur = conn.cursor()
     cur.execute(
-        " SELECT students.person_id, person.name, students.average FROM students LEFT JOIN person ON students.person_id = person.id ORDER BY average DESC LIMIT 3"  
+        "SELECT students.person_id, person.name, students.average FROM students LEFT JOIN person ON students.person_id = person.id ORDER BY average DESC LIMIT 3"  
     )
     rows = cur.fetchall()
     if not rows:
@@ -581,6 +581,7 @@ def view_degree_info(degree_id):
             conn.close()
 
     return flask.jsonify(response)
+
 
 @app.route("/login-instructor", methods=["GET"])
 def login_instructor():
@@ -765,6 +766,7 @@ def delete_details(student_id):
         ), 400
     conn.commit()
     return jsonify({"status": StatusCodes["success"], "errors": None}), 204
+
 
 @app.route("/top_by_district", methods=["GET"])
 def generate_top_by_district():  # Renamed from register_instructor for clarity
