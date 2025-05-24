@@ -647,7 +647,58 @@ def login_instructor():
         if conn is not None:
             conn.close()
 
+@app.route("/degree-course-info/<degree_id>", methods=["GET"])
+@staff_required()
+def view_degree_info(degree_id):
+    conn = db_connection()
+    cur = conn.cursor()
+    response = None
+    try:
+            cur.execute(
+                """
+                SELECT * FROM get_course_editions_by_degree(%s) 
+                """,
+                (degree_id,),
+            )
+            rows = cur.fetchall()
+        
+            if not rows:
+                return {"status": "error", "message": "No data found"}
+        
 
+            first_row = rows[0]
+        
+
+            last_column_values = [row[-1] for row in rows]
+        
+
+            response = {
+                "first_row": {
+                    "course_id": first_row[0],
+                    "course_name": first_row[1],
+                    "degree_id": first_row[2],
+                    "ano": first_row[3],
+                    "total_capacity": first_row[4],
+                    "degree_count": first_row[5],
+                    "passed_students": first_row[6],
+                    "coordinator": first_row[7],
+                    "instructors": last_column_values 
+                },
+            }
+
+    except (
+        Exception,
+        psycopg3.DatabaseError,
+    ) as error:  
+        response = {
+            "status": StatusCodes["internal_error"],
+            "errors": str(error),
+        }
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return flask.jsonify(response)
 @app.route("/dbproj/enroll_degree/<int:degree_id>", methods=["POST"])
 @staff_required
 def enroll_degree(degree_id):
