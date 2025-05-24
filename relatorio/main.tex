@@ -160,6 +160,15 @@ Depois de fazer download do PostgreSQL installer carregar duas vezes onde foi gu
   10. Carreger em Finish
 \end{minipage}
 
+\vspace{1em}
+
+\subsection{Creating the needed features of the Database}
+Now open SQL shell and enter with your PostgreSQL database and copy and paste this:
+
+\texttt{pg\_dump -h localhost -p 5432 -U "insert\_your\_user\_name" -d "insert\_your\_database\_name" -f backup.sql }
+
+This will create the needed triggers, functions and tables for running the code.
+
 \newpage
 \section{User Manual}
 
