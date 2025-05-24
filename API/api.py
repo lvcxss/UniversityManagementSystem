@@ -786,7 +786,7 @@ def generate_top_by_district():  # Renamed from register_instructor for clarity
 
 @app.route("/dbproj/report", methods=["GET"])
 @staff_required
-def generate_report():  # Renamed from register_instructor for clarity
+def generate_report():
     conn = db_connection()
     cur = conn.cursor()
 
@@ -795,7 +795,7 @@ def generate_report():  # Renamed from register_instructor for clarity
 
         results = []
         for row in cur.fetchall():
-            results.append({"edição": row[0], "numero": row[1]})
+            results.append({"Edição": row[0],"Mês" : row[1], "Alunos Admitidos": row[2]})
 
         return flask.jsonify({"status": StatusCodes["success"], "results": results})
 
@@ -899,6 +899,55 @@ def submit_grades(edition_id):
         cur.close()
         conn.close()
 
+@app.route("/dbproj/student_details/<int:student_id>", methods=["GET"])
+def student_details(student_id):
+    conn = db_connection()
+    cur = conn.cursor()
+    response = None
+
+    try:
+        # Get course details for student
+        cur.execute(f"SELECT * FROM get_student_courses({student_id})")
+        rows = cur.fetchall()
+
+        if not rows:
+            response = {
+                "status": StatusCodes["api_error"],
+                "errors": "Student has no courses or doesn't exist",
+                "results": []
+            }
+        else:
+            # Build course list with proper JSON structure
+            courses = []
+            for row in rows:
+                courses.append({
+                    "course_edition_id": row[0],  # course_id from query
+                    "course_name": row[1],         # course_name from query
+                    "course_edition_year": row[2], # edition_year from query
+                    "grade": float(row[3]) if row[3] else None  # Handle numeric(5,2) grade
+                })
+
+            response = {
+                "status": StatusCodes["success"],
+                "results": courses
+            }
+
+        conn.commit()
+
+    except Exception as e:
+        conn.rollback()
+        response = {
+            "status": StatusCodes["internal_error"],
+            "errors": str(e),
+            "results": []
+        }
+    finally:
+        if cur is not None:
+            cur.close()
+        if conn is not None:
+            conn.close()
+
+    return flask.jsonify(response)
 
 if __name__ == "__main__":
     logging.basicConfig(filename="log_file.log")

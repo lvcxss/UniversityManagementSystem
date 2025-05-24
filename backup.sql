@@ -344,6 +344,41 @@ $$;
 ALTER FUNCTION public.fn_register_student(p_name text, p_email text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) OWNER TO postgres;
 
 --
+-- Name: get_student_courses(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.get_student_courses(student_id_param integer) RETURNS TABLE(course_id integer, course_name character varying, edition_year integer, grade numeric)
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        ce.course_id::INTEGER,
+        c.name::VARCHAR(64),  -- Explicit cast to match return type
+        e.ano::INTEGER,
+        ge.grade::NUMERIC(5,2)  -- Cast to NUMERIC(5,2)
+    FROM
+        students_degree sd
+    JOIN courses_degree cd 
+        ON sd.degree_id = cd.degree_id
+    JOIN course c 
+        ON cd.course_id = c.id
+    JOIN course_edition ce 
+        ON c.id = ce.course_id
+    JOIN edition e
+        ON ce.edition_id = e.id
+    LEFT JOIN grades_edition_stats ge 
+        ON ce.edition_id = ge.edition_id 
+        AND sd.students_id = ge.students_person_id
+    WHERE
+        sd.students_id = student_id_param;
+END;
+$$;
+
+
+ALTER FUNCTION public.get_student_courses(student_id_param integer) OWNER TO postgres;
+
+--
 -- Name: prevent_prereq_func(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -602,7 +637,7 @@ ALTER TABLE public.edition OWNER TO aulaspl;
 --
 
 CREATE TABLE public.edition_instructors (
-    ediiton_id integer NOT NULL,
+    editon_id integer NOT NULL,
     instructor_id integer NOT NULL
 );
 
@@ -616,7 +651,8 @@ ALTER TABLE public.edition_instructors OWNER TO aulaspl;
 CREATE TABLE public.edition_stats (
     students_person_id integer NOT NULL,
     edition_id integer NOT NULL,
-    passed boolean DEFAULT false NOT NULL
+    passed boolean DEFAULT false NOT NULL,
+    month integer DEFAULT 1
 );
 
 
@@ -768,11 +804,12 @@ ALTER TABLE public.lesson OWNER TO aulaspl;
 
 CREATE VIEW public.passed_students_by_edition AS
  SELECT e.ano,
+    es.month,
     count(*) AS passed_students_count
    FROM (public.edition_stats es
      JOIN public.edition e ON ((e.id = es.edition_id)))
   WHERE (es.passed = true)
-  GROUP BY e.ano;
+  GROUP BY e.ano, es.month;
 
 
 ALTER VIEW public.passed_students_by_edition OWNER TO aulaspl;
@@ -1026,6 +1063,8 @@ COPY public.attendance (students_person_id) FROM stdin;
 --
 
 COPY public.class (class_id, name, edition_id) FROM stdin;
+1	bd	1
+2	so	1
 \.
 
 
@@ -1086,7 +1125,7 @@ COPY public.department_classroom (dep_id, name, classroom_capacity, classroom_lo
 --
 
 COPY public.edition (id, ano, course_id, coordinator) FROM stdin;
-1	1999	1	1
+1	1999	1	24
 \.
 
 
@@ -1094,7 +1133,9 @@ COPY public.edition (id, ano, course_id, coordinator) FROM stdin;
 -- Data for Name: edition_instructors; Type: TABLE DATA; Schema: public; Owner: aulaspl
 --
 
-COPY public.edition_instructors (ediiton_id, instructor_id) FROM stdin;
+COPY public.edition_instructors (editon_id, instructor_id) FROM stdin;
+1	24
+1	1
 \.
 
 
@@ -1102,9 +1143,9 @@ COPY public.edition_instructors (ediiton_id, instructor_id) FROM stdin;
 -- Data for Name: edition_stats; Type: TABLE DATA; Schema: public; Owner: aulaspl
 --
 
-COPY public.edition_stats (students_person_id, edition_id, passed) FROM stdin;
-11	1	t
-13	1	f
+COPY public.edition_stats (students_person_id, edition_id, passed, month) FROM stdin;
+11	1	t	1
+13	1	f	1
 \.
 
 
@@ -1123,6 +1164,7 @@ COPY public.employee (salario, anos_servico, active, numero_docente, person_id) 
 --
 
 COPY public.evaluation_period (period_id, name, weight_pct) FROM stdin;
+1	periodo	4.00
 \.
 
 
@@ -1181,7 +1223,6 @@ COPY public.person (id, name, nif, cc, email_pessoal, phone, gender, password, r
 14	behelit	98724198421	12345	behelit@gmail.com	+351 123 123 123	M	$2b$12$cuRkIloBd49B8QqqtJVxm./5bo70kKKNV9lfQ47bX5c7ZP2WaCbAa	staff	California	\N
 1	joao instrutor	98724198422	3212	joao@dei.uc.pt	+351 222 222 222	m	$2b$12$bW1kBfzIpD05mCQzfhxN5OAlMIkxi/w4Qdy.RPDOb3GCfEcCgWbbO	instructor	Lisboa	\N
 21	behelitta	98724198421	1234566	behelita@gmail.com	+351 123 666 123	M	$2b$12$pAmZjdF/T3pzQ1rjalaugexyClMLhNZ7c.HuhjrRW2fOyZUmlSIzO	staff	\N	behelita23@uc.pt
-23	slk	218128	122111	sk@skbu.com	+999 133 156 563	M	$2b$12$rd92MaQlLqFu6133w5BWFuwSZSuRs3Nvy3Ko28UxYuqTWm7PTo8O6	student	\N	cmi@uc.pt
 24	cleverson	522	9251	2@skbi.com	+351 111 223 123	M	$2b$12$tyRfQljuq/DztPk3J/6oiemu1PaeFcb3Iqj/K.piVIMZjm/fbAUlW	instructor	\N	cuh@uc.pt
 \.
 
@@ -1218,7 +1259,6 @@ COPY public.staff (staff_person_id) FROM stdin;
 COPY public.students (average, numero_estudante, person_id) FROM stdin;
 10	123412678	11
 10	123412678	13
-17	uc232442	23
 \.
 
 
@@ -1227,7 +1267,6 @@ COPY public.students (average, numero_estudante, person_id) FROM stdin;
 --
 
 COPY public.students_activity (activity_id, students_id) FROM stdin;
-1	23
 \.
 
 
@@ -1244,7 +1283,6 @@ COPY public.students_classes (student_id, class_id) FROM stdin;
 --
 
 COPY public.students_degree (students_id, degree_id, staff_id) FROM stdin;
-23	1	21
 \.
 
 
@@ -1390,7 +1428,7 @@ ALTER TABLE ONLY public.department_classroom
 --
 
 ALTER TABLE ONLY public.edition_instructors
-    ADD CONSTRAINT edition_instructors_pkey PRIMARY KEY (ediiton_id, instructor_id);
+    ADD CONSTRAINT edition_instructors_pkey PRIMARY KEY (editon_id, instructor_id);
 
 
 --
@@ -1447,6 +1485,14 @@ ALTER TABLE ONLY public.instructors
 
 ALTER TABLE ONLY public.invoices
     ADD CONSTRAINT invoices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: edition_stats monthcheck; Type: CHECK CONSTRAINT; Schema: public; Owner: aulaspl
+--
+
+ALTER TABLE public.edition_stats
+    ADD CONSTRAINT monthcheck CHECK (((month >= 1) AND (month <= 12))) NOT VALID;
 
 
 --
@@ -1656,11 +1702,27 @@ ALTER TABLE ONLY public.students_degree
 
 
 --
--- Name: edition_stats student person id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
+-- Name: students_degree student id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_degree
+    ADD CONSTRAINT "student id" FOREIGN KEY (students_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
+
+
+--
+-- Name: edition_stats student id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
 --
 
 ALTER TABLE ONLY public.edition_stats
-    ADD CONSTRAINT "student person id" FOREIGN KEY (students_person_id) REFERENCES public.students(person_id) NOT VALID;
+    ADD CONSTRAINT "student id" FOREIGN KEY (students_person_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
+
+
+--
+-- Name: students_activity student id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_activity
+    ADD CONSTRAINT "student id" FOREIGN KEY (students_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
 
 
 --
@@ -1672,19 +1734,11 @@ ALTER TABLE ONLY public.students_edition
 
 
 --
--- Name: students_activity students_activity_students_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: students_classes student_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.students_activity
-    ADD CONSTRAINT students_activity_students_id_fkey FOREIGN KEY (students_id) REFERENCES public.students(person_id) NOT VALID;
-
-
---
--- Name: students_degree students_degree_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.students_degree
-    ADD CONSTRAINT students_degree_fk1 FOREIGN KEY (students_id) REFERENCES public.students(person_id);
+ALTER TABLE ONLY public.students_classes
+    ADD CONSTRAINT student_id FOREIGN KEY (student_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
 
 
 --
@@ -1696,14 +1750,6 @@ ALTER TABLE ONLY public.students_degree
 
 
 --
--- Name: students_classes students_ed_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.students_classes
-    ADD CONSTRAINT students_ed_fk FOREIGN KEY (student_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
-
-
---
 -- Name: students_classes students_ed_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1712,11 +1758,11 @@ ALTER TABLE ONLY public.students_classes
 
 
 --
--- Name: students students_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: students studentsfk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.students
-    ADD CONSTRAINT students_fk1 FOREIGN KEY (person_id) REFERENCES public.person(id);
+    ADD CONSTRAINT studentsfk1 FOREIGN KEY (person_id) REFERENCES public.person(id) ON DELETE CASCADE NOT VALID;
 
 
 --
