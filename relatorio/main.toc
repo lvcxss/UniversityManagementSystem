@@ -1,0 +1,14 @@
+\babel@toc {portuguese}{}\relax 
+\contentsline {section}{\numberline {1}Abstract}{2}{section.1}%
+\contentsline {section}{\numberline {2}Diagrama}{2}{section.2}%
+\contentsline {section}{\numberline {3}Transactions}{2}{section.3}%
+\contentsline {section}{\numberline {4}Potenciais Conflitos}{2}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Soluções}{3}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Plano}{3}{section.5}%
+\contentsline {section}{\numberline {6}Installation Manual}{3}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Clone Python API and Install Dependencies}{3}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Installing PostgreSQL and creating the needed tables}{3}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Installing PostgreSQL}{3}{subsubsection.6.2.1}%
+\contentsline {section}{\numberline {7}User Manual}{5}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Request 1}{5}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}}{5}{subsubsection.7.1.1}%

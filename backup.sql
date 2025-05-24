@@ -344,6 +344,60 @@ $$;
 ALTER FUNCTION public.fn_register_student(p_name text, p_email text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) OWNER TO postgres;
 
 --
+-- Name: get_course_editions_by_degree(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.get_course_editions_by_degree(p_degree_id integer) RETURNS TABLE(course_id integer, course_name character varying, degree_id integer, edition_id integer, year integer, total_capacity bigint, degree_count bigint, passed_students_count bigint, coordinator integer, staff_person_id integer)
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        c.id AS course_id,
+        c.name AS course_name,
+        d.id AS degree_id,
+        e.id AS edition_id,
+        e.ano AS year,
+        SUM(p.capacity) AS total_capacity,
+        COUNT(DISTINCT d.id) AS degree_count,
+        SUM(es.passed::int) AS passed_students_count,
+        e.coordinator,
+        dc.theory_instructors_class_staff_person_id
+    FROM 
+        public.degree d
+    JOIN 
+        courses_degree cd ON d.id = cd.degree_id
+    JOIN 
+        course c ON c.id = cd.course_id
+    JOIN 
+        edition e ON e.course_id = c.id
+    JOIN 
+        class cl ON cl.edition_id = e.id
+    JOIN 
+        class_schedule cs ON cs.class_id = cl.class_id
+    JOIN 
+        department_classroom dc ON dc.name = cs.classroom
+    JOIN 
+        practical p ON cs.class_id = p.class_id
+    JOIN 
+        edition_stats es ON es.edition_id = e.id
+    WHERE
+        d.id = p_degree_id
+    GROUP BY
+        c.id,
+        c.name,
+        d.id,
+        e.id,
+        e.ano,
+        e.coordinator,
+        dc.theory_instructors_class_staff_person_id;
+END;
+$$;
+
+
+ALTER FUNCTION public.get_course_editions_by_degree(p_degree_id integer) OWNER TO postgres;
+
+--
 -- Name: get_student_courses(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -961,36 +1015,11 @@ ALTER TABLE public.students_edition OWNER TO aulaspl;
 --
 
 CREATE TABLE public.theory (
-    instructors_class_area character varying(512) NOT NULL,
-    instructors_class_class_id bigint NOT NULL,
-    instructors_class_class_capacity smallint,
-    instructors_class_epaaicsicsp integer NOT NULL,
-    instructors_class_staff_person_id integer NOT NULL
+    instructor_id integer NOT NULL
 );
 
 
 ALTER TABLE public.theory OWNER TO postgres;
-
---
--- Name: theory_instructors_class_class_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.theory_instructors_class_class_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.theory_instructors_class_class_id_seq OWNER TO postgres;
-
---
--- Name: theory_instructors_class_class_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.theory_instructors_class_class_id_seq OWNED BY public.theory.instructors_class_class_id;
-
 
 --
 -- Name: top_students_by_district; Type: VIEW; Schema: public; Owner: postgres
@@ -1036,13 +1065,6 @@ ALTER TABLE ONLY public.person ALTER COLUMN id SET DEFAULT nextval('public.perso
 
 
 --
--- Name: theory instructors_class_class_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.theory ALTER COLUMN instructors_class_class_id SET DEFAULT nextval('public.theory_instructors_class_class_id_seq'::regclass);
-
-
---
 -- Data for Name: activity; Type: TABLE DATA; Schema: public; Owner: aulaspl
 --
 
@@ -1073,6 +1095,7 @@ COPY public.class (class_id, name, edition_id) FROM stdin;
 --
 
 COPY public.class_schedule (class_id, department, classroom, start, "end", weekday) FROM stdin;
+1	dei	1	23:00:00	21:00:00	1
 \.
 
 
@@ -1117,6 +1140,7 @@ COPY public.degree (id, name, cost, description, staff_id) FROM stdin;
 --
 
 COPY public.department_classroom (dep_id, name, classroom_capacity, classroom_location, theory_instructors_class_staff_person_id) FROM stdin;
+1	c.5.2	50	texas	1
 \.
 
 
@@ -1298,7 +1322,7 @@ COPY public.students_edition (student_id, edition_id) FROM stdin;
 -- Data for Name: theory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.theory (instructors_class_area, instructors_class_class_id, instructors_class_class_capacity, instructors_class_epaaicsicsp, instructors_class_staff_person_id) FROM stdin;
+COPY public.theory (instructor_id) FROM stdin;
 \.
 
 
@@ -1342,13 +1366,6 @@ SELECT pg_catalog.setval('public.invoices_id_seq', 2, true);
 --
 
 SELECT pg_catalog.setval('public.person_id_seq', 26, true);
-
-
---
--- Name: theory_instructors_class_class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.theory_instructors_class_class_id_seq', 1, false);
 
 
 --
@@ -1568,19 +1585,11 @@ ALTER TABLE ONLY public.students
 
 
 --
--- Name: theory theory_instructors_class_class_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.theory
-    ADD CONSTRAINT theory_instructors_class_class_id_key UNIQUE (instructors_class_class_id);
-
-
---
 -- Name: theory theory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.theory
-    ADD CONSTRAINT theory_pkey PRIMARY KEY (instructors_class_staff_person_id);
+    ADD CONSTRAINT theory_pkey PRIMARY KEY (instructor_id);
 
 
 --
@@ -1638,14 +1647,6 @@ ALTER TABLE ONLY public.edition
 
 
 --
--- Name: department_classroom department_classroom_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.department_classroom
-    ADD CONSTRAINT department_classroom_fk1 FOREIGN KEY (theory_instructors_class_staff_person_id) REFERENCES public.theory(instructors_class_staff_person_id);
-
-
---
 -- Name: edition_stats edition id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
 --
 
@@ -1675,6 +1676,22 @@ ALTER TABLE ONLY public.grades_edition_stats
 
 ALTER TABLE ONLY public.grades_edition_stats
     ADD CONSTRAINT ges_students_fk FOREIGN KEY (students_person_id) REFERENCES public.students(person_id) ON DELETE CASCADE;
+
+
+--
+-- Name: theory instructor id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.theory
+    ADD CONSTRAINT "instructor id" FOREIGN KEY (instructor_id) REFERENCES public.instructors(instructor_person_id) NOT VALID;
+
+
+--
+-- Name: department_classroom instructor_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.department_classroom
+    ADD CONSTRAINT instructor_id FOREIGN KEY (theory_instructors_class_staff_person_id) REFERENCES public.instructors(instructor_person_id) NOT VALID;
 
 
 --

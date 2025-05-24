@@ -1,0 +1,183 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage{style}
+
+\title{\Huge Projeto BD 2024/2025\\
+        \it \huge University Management System
+}
+\author{Base de Dados --- LEI 2024/2025}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{center}
+    \begin{tabularx}{0.8\textwidth}{Xcr}
+    \bf Nome  & \bf Nº Estudante & \bf Contacto  \\\midrule
+    Vasco Guilherme da Silva Alves & 2022228207 & 960399272\\
+    Lucas Pinto Oliveira & 2023219472 & 969244925 \\ 
+    João Tomás Gomes Forte Neto & 2023234004 & 967476669
+    \end{tabularx}
+\end{center}
+
+\tableofcontents
+
+% -----------------------------------------------------------------------------
+% Abstract
+% -----------------------------------------------------------------------------
+\newpage
+\section{Abstract}
+O objetivo deste projeto é desenvolver competências que nos permitam realizar outros projetos envolvendo bases de dados. Para alcançar esse objetivo, pretendemos focar nas seguintes competências: 
+
+\begin{itemize}
+  \item Melhorar nossas habilidades de organização.
+  \item Desenvolver modelos de dados eficientes e bem estruturados.
+  \item Aprimorar nossa capacidade de criar modelos que atendam às necessidades dos projetos.
+  \item Adquirir conhecimentos para instalar e configurar sistemas de gestão de bases de dados.
+\end{itemize}
+
+% -----------------------------------------------------------------------------
+% Diagrama
+% -----------------------------------------------------------------------------
+\section{Diagrama}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{mrbreast.png}
+    \caption{Diagrama de Relacionamento de Entidades}
+    \label{fig:tensa-bullet}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+% Transactions
+% -----------------------------------------------------------------------------
+\section{Transactions}
+  Após uma discussão com o grupo todo achamos pertinente implementar o uso de transações nas seguintes operações: 
+
+\begin{itemize}
+  \item Inscrição de um aluno num curso (degree) por causa do débito que deve ser associado ao estudante;  
+  \item Inscrição de um aluno numa cadeira (edition) por causa da capacidade máxima da cadeira; 
+  \item Inscrição de um aluno numa atividade (activity) por causa do débito que deve ser associado ao estudante; 
+\end{itemize}
+  
+% -----------------------------------------------------------------------------
+% Potenciais Conflitos
+% -----------------------------------------------------------------------------
+\section{Potenciais Conflitos}
+  Consideramos que podem ocorrer conflitos (principalmente de concorrência) nos seguintes casos:
+
+\begin{itemize}
+  \item Na criação de uma nova turma (class) por causa de sobreposição de aulas com outras turmas na mesma sala (classroom), ou mesmo capacidade da turma superior à sala;
+  \item Ao inscrever um aluno numa turma, pode ocorrer sobreposição nas aulas das turmas que ele está inscrito; 
+  \item A inscrição de um aluno numa cadeira (edition) por causa da capacidade máxima da cadeira;
+\end{itemize}
+
+\subsection{Soluções}
+
+Para resolver o primeiro conflito devemos, ao criar uma turma, verificar antes se a sala de aulas já está ocupada; caso esteja, não poderemos criar uma turma com aquelas aulas. A mesma lógica se aplica à inscrição de um aluno numa turma; porém, esta última deve ser executada com o uso de transações para garantir que uma vaga não seja ocupada por um aluno que nem irá participar nessa turma.
+O último possível conflito já é resolvido com as transações. Caso o aluno se tente inscrever numa cadeira e a cadeira já esteja cheia, não será possível se inscrever. Como esta operação é executada com transações, não será ocupada uma vaga numa cadeira em vão.
+
+\section{Plano}
+
+\begin{enumerate}
+  \item \textbf{Quick Checkpoint 1}
+    \begin{itemize}
+      \item Instalação do DBMS: Cada membro da equipa fará a instalação nos seus PCs individuais.
+      \item Manual de Instalação: Será criado pelo Lucas.
+      \item Implementação da REST API: Será realizada pelo Vasco.
+    \end{itemize}
+
+  \item\textbf{Quick Checkpoint 2}
+    \begin{itemize}
+      \item Implementação do processo de autenticação: Será feito pelo João.
+      \item Criação do Manual do Utilizador: Será realizado pelo Vasco.
+    \end{itemize}
+
+  \item \textbf{Final Delivery}
+    \begin{itemize}
+      \item Modelo de relação: Será criado pelo Lucas. 
+      \item Revisão Final e Demonstração: Será realizada em conjunto por todo o grupo.
+    \end{itemize}
+\end{enumerate}
+
+
+\section{Installation Manual}
+% For example, Tristan Tate, pulled up a video, his favorite whiskey, Johnnie Walker. What do I do at duty-free? Fucking Johnnie Walker. That night, sipping the fucking Johnnie Walker in the war room by myself with him chilling. Why? I studied, bro.
+
+\subsection{Clone Python API and Install Dependencies}
+\texttt{git clone https://github.com/lvcxss/UniversityManagementSystem\\pip install -r requirements.txt}
+
+\subsection{Installing PostgreSQL and creating the needed tables}
+\subsubsection{Installing PostgreSQL}
+\textbf{Step 1: Downloading PostgreSQL Installer}
+Download the latest stable PostgreSQL Installer for Windows:www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+\textbf{Step 2:Installing the PostgreSQL installer}
+Depois de fazer download do PostgreSQL installer carregar duas vezes onde foi guardado o ficheiro, para abrir o PostgreSQL installer.
+\textbf{Step 3: Navegar o installer}
+
+% \newpage
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd.png}
+  1. Carregar no butão next
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(1).png}
+  2. Escolher uma pasta (default path é Program Files), e carregar no butão next
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(2).png}
+  3. Escolher os componentes para instalar (o unico componente necessario para utilizar a base de dados é PostgreSQL Server)
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(3).png} 
+  4. Escolher a pasta para o lugar onde a informação vai ser instalada e carregar next
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{Screenshot-4109.png}  
+  5. Escolher a password da database superuser(Importante não esquecer vai ser utilizado mais tarde) e carregar em next
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(4).png}
+  6. Carregar em Next
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(5).png}
+  7. Carregar em Next
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{image.psd(6).png}
+  8. Carregar em Next
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{Screenshot-830.png}
+  9. Esperar para instalar
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \includegraphics[width=\textwidth]{Screenshot-937.png}
+  10. Carreger em Finish
+\end{minipage}
+
+
+
+\section{User Manual}
+
+\subsection{Request 1}
+\vspace{1em}
+
+\subsubsection{}
+\begin{lstlisting}[language=json]
+{
+    "name":"guts",
+    "email": "guts@gmail.com",
+    "phone": "+351 123 123 123",
+    "cc" : 12345,
+    "nif" : 98724198421,
+    "password" : "password", 
+    "gender" : "female"
+}
+\end{lstlisting}
+
+\end{document}

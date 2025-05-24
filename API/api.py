@@ -551,68 +551,45 @@ def show_top_students():
         }
     return flask.jsonify(response)
 
-
-@app.route("/degree-course-info/<degree_id>", methods=["GET"])
-# @staff_required()
+@app.route("/dbproj/degree_details/<degree_id>", methods=["GET"])
+@staff_required
 def view_degree_info(degree_id):
     conn = db_connection()
     cur = conn.cursor()
     response = None
-
     try:
-        cur.execute(
-            """
-            SELECT epaaicsicsp FROM degree WHERE id = %s""",
-            (degree_id,),
-        )
-        rows = cur.fetchall()
-
-        if not rows:
-            response = {
-                "status": StatusCodes["api_error"],
-                "errors": "Degree not found",
-                "results": None,
-            }
-        else:
-            epaaicsicsp = rows[0][0]
-
             cur.execute(
                 """
-                SELECT course_id, ano, instructors_class_class_capacity, 
-                       instructors_class_employee_person_id, 
-                       theory_instructors_class_employee_person_id, 
-                       theory_instructors_class_employee_person_id1 
-                FROM edition_practical_assistant_instructors_course 
-                WHERE course_id = %s
+                SELECT * FROM get_course_editions_by_degree(%s) 
                 """,
-                (epaaicsicsp,),
+                (degree_id,),
             )
             rows = cur.fetchall()
-
+        
             if not rows:
-                response = {
-                    "status": StatusCodes["api_error"],
-                    "errors": "Course edition not found",
-                    "results": None,
-                }
-            else:
-                # Create success response
-                response = {
-                    "status": StatusCodes["success"],
-                    "results": {
-                        "edition": rows[0][1],
-                        "degree_id": degree_id,
-                        "class_capacity": rows[0][2],
-                        "coordenador": rows[0][3],
-                        "assistente_1": rows[0][4],
-                        "assistente_2": rows[0][5],
-                    },
-                }
+                return {"status": "error", "message": "No data found"}
+        
+            first_row = rows[0]
+            last_column_values = [row[-1] for row in rows]
+        
+            response = {
+                "first_row": {
+                    "course_id": first_row[0],
+                    "course_name": first_row[1],
+                    "degree_id": first_row[2],
+                    "ano": first_row[3],
+                    "total_capacity": first_row[4],
+                    "degree_count": first_row[5],
+                    "passed_students": first_row[6],
+                    "coordinator": first_row[7],
+                    "instructors": last_column_values 
+                },
+            }
 
     except (
         Exception,
-        psycopg2.DatabaseError,
-    ) as error:  # Changed psycopg3 to psycopg2 (assuming)
+        psycopg3.DatabaseError,
+    ) as error:  
         response = {
             "status": StatusCodes["internal_error"],
             "errors": str(error),
@@ -620,9 +597,7 @@ def view_degree_info(degree_id):
     finally:
         if conn is not None:
             conn.close()
-
     return flask.jsonify(response)
-
 
 @app.route("/dbproj/enroll_degree/<int:degree_id>", methods=["POST"])
 @staff_required

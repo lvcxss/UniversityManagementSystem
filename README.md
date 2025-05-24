@@ -13,7 +13,7 @@
 
 - [X] POST http://localhost:8080/dbproj/submit_grades/{course_edition_id} 
 - [X] GET http://localhost:8080/dbproj/student_details/{student_id}
-- [ ] GET http://localhost:8080/dbproj/degree_details/{degree_id}
+- [X] GET http://localhost:8080/dbproj/degree_details/{degree_id}
 
 - [X] GET http://localhost:8080/dbproj/top3
 - [X] GET http://localhost:8080/dbproj/top_by_district/
