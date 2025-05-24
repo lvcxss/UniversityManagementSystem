@@ -111,6 +111,16 @@ def student_required(f):
     return decorated
 
 
+## HELPER FUNCTIONS
+
+
+def verify_phone_number(pn):
+    for i in pn:
+        if not i.isdigit() and i != "+" and i != " ":
+            return False
+    return True
+
+
 ##########################################################
 ## ENDPOINTS
 ##########################################################
@@ -164,6 +174,15 @@ def register_staff():
                 "results": None,
             }
         ), 400
+    if not verify_phone_number(data["phone"]):
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Invalid phone number",
+                "results": None,
+            }
+        ), 400
+
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
     conn = db_connection()
     cur = conn.cursor()
@@ -240,6 +259,15 @@ def register_student():
                 "results": None,
             }
         ), 400
+    if not verify_phone_number(data["phone"]):
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Invalid phone number",
+                "results": None,
+            }
+        ), 400
+
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
     conn = db_connection()
     cur = conn.cursor()
@@ -330,7 +358,7 @@ def register_degree():
 @app.route("/dbproj/register/instructor", methods=["POST"])
 @staff_required
 def register_instructor():
-    data = request.get_json()
+    data = request.get_json() or {}
     required = [
         "name",
         "email",
@@ -354,6 +382,15 @@ def register_instructor():
                 "results": None,
             }
         ), 400
+    if not verify_phone_number(data["phone"]):
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Invalid phone number",
+                "results": None,
+            }
+        ), 400
+
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
     conn = db_connection()
     cur = conn.cursor()
@@ -410,7 +447,7 @@ def register_instructor():
 @app.route("/dbproj/user", methods=["PUT"])
 def login_user():
     data = request.get_json() or {}
-    email = data.get("username")
+    email = data.get("email")
     password = data.get("password")
     if not email or not password:
         return jsonify(
@@ -462,7 +499,6 @@ def login_user():
     finally:
         conn.close()
 
-    return flask.jsonify(response)
 
 @app.route("/dbproj/person-info", methods=["GET"])
 @token_required
@@ -486,12 +522,13 @@ def view_person_info():
         }
     ), 200
 
+
 @app.route("/top-students", methods=["GET"])
 def show_top_students():
     conn = db_connection()
     cur = conn.cursor()
     cur.execute(
-        "SELECT students.person_id, person.name, students.average FROM students LEFT JOIN person ON students.person_id = person.id ORDER BY average DESC LIMIT 3"  
+        "SELECT students.person_id, person.name, students.average FROM students LEFT JOIN person ON students.person_id = person.id ORDER BY average DESC LIMIT 3"
     )
     rows = cur.fetchall()
     if not rows:
@@ -502,42 +539,43 @@ def show_top_students():
         }
     else:
         person_id = [rows[0][0], rows[1][0], rows[2][0]]
-        person_name =[rows[0][1], rows[1][1], rows[2][1]]
-        person_average=[rows[0][2], rows[1][2], rows[2][2]]
-        
+        person_name = [rows[0][1], rows[1][1], rows[2][1]]
+        person_average = [rows[0][2], rows[1][2], rows[2][2]]
+
         response = {
             "Top 3": [
                 {"Name": person_name[0], "Average": person_average[0]},
                 {"Name": person_name[1], "Average": person_average[1]},
-                {"Name": person_name[2], "Average": person_average[2]}
-                ]
-            }
+                {"Name": person_name[2], "Average": person_average[2]},
+            ]
+        }
     return flask.jsonify(response)
-@app.route("/degree-course-info/<degree_id>", methods =["GET"])
-#@staff_required()
+
+
+@app.route("/degree-course-info/<degree_id>", methods=["GET"])
+# @staff_required()
 def view_degree_info(degree_id):
     conn = db_connection()
     cur = conn.cursor()
-    response = None  
-    
+    response = None
+
     try:
-        
         cur.execute(
             """
-            SELECT epaaicsicsp FROM degree WHERE id = %s""", 
+            SELECT epaaicsicsp FROM degree WHERE id = %s""",
             (degree_id,),
         )
         rows = cur.fetchall()
-        
+
         if not rows:
             response = {
                 "status": StatusCodes["api_error"],
-                "errors": "Degree not found",  
+                "errors": "Degree not found",
                 "results": None,
             }
         else:
             epaaicsicsp = rows[0][0]
-            
+
             cur.execute(
                 """
                 SELECT course_id, ano, instructors_class_class_capacity, 
@@ -546,15 +584,15 @@ def view_degree_info(degree_id):
                        theory_instructors_class_employee_person_id1 
                 FROM edition_practical_assistant_instructors_course 
                 WHERE course_id = %s
-                """, 
-                (epaaicsicsp,)
+                """,
+                (epaaicsicsp,),
             )
             rows = cur.fetchall()
-            
+
             if not rows:
                 response = {
                     "status": StatusCodes["api_error"],
-                    "errors": "Course edition not found",  
+                    "errors": "Course edition not found",
                     "results": None,
                 }
             else:
@@ -563,82 +601,18 @@ def view_degree_info(degree_id):
                     "status": StatusCodes["success"],
                     "results": {
                         "edition": rows[0][1],
-                        "degree_id": degree_id, 
-                        "class_capacity": rows[0][2],  
+                        "degree_id": degree_id,
+                        "class_capacity": rows[0][2],
                         "coordenador": rows[0][3],
-                        "assistente_1": rows[0][4], 
-                        "assistente_2": rows[0][5]
-                    }
-                }
-                
-    except (Exception, psycopg2.DatabaseError) as error:  # Changed psycopg3 to psycopg2 (assuming)
-        response = {
-            "status": StatusCodes["internal_error"],
-            "errors": str(error),
-        } 
-    finally:
-        if conn is not None:
-            conn.close()
-
-    return flask.jsonify(response)
-
-
-@app.route("/login-instructor", methods=["GET"])
-def login_instructor():
-    data = flask.request.get_json()
-    email = data.get("email_docente")
-    password = data.get("password")
-
-    if not email or not password:
-        return flask.jsonify(
-            {
-                "status": StatusCodes["api_error"],
-                "errors": "Email and password are required",
-                "results": None,
-            }
-        )
-
-    conn = db_connection()
-    cur = conn.cursor()
-    response = {}
-    try:
-        cur.execute(
-            " SELECT staff.person_id, person.name, person.password, person.email_pessoal FROM staff LEFT JOIN person ON staff.person_id = person.id WHERE staff.email_docente = %s",
-            (email,),
-        )
-        rows = cur.fetchall()
-        if not rows:
-            response = {
-                "status": StatusCodes["api_error"],
-                "errors": "Staff not found",
-                "results": None,
-            }
-        else:
-            name = rows[0][1]
-            hashed_password = rows[0][2]
-            email_pessoal = rows[0][3]
-            if bcrypt.check_password_hash(hashed_password, password):
-                access_token = jwt.encode(
-                    {
-                        "username": email_pessoal,
-                        "role": "instructor",
-                        "exp": datetime.datetime.now() + datetime.timedelta(minutes=30),
+                        "assistente_1": rows[0][4],
+                        "assistente_2": rows[0][5],
                     },
-                    Config.SECRET_KEY,
-                    algorithm="HS256",
-                )
-                response = {
-                    "status": StatusCodes["success"],
-                    "results": {"access_token": access_token},
-                    "message": f"Welcome {name}",
                 }
-            else:
-                response = {
-                    "status": StatusCodes["api_error"],
-                    "errors": "Password incorrect",
-                    "results": None,
-                }
-    except (Exception, psycopg3.DatabaseError) as error:
+
+    except (
+        Exception,
+        psycopg2.DatabaseError,
+    ) as error:  # Changed psycopg3 to psycopg2 (assuming)
         response = {
             "status": StatusCodes["internal_error"],
             "errors": str(error),
@@ -646,6 +620,8 @@ def login_instructor():
     finally:
         if conn is not None:
             conn.close()
+
+    return flask.jsonify(response)
 
 
 @app.route("/dbproj/enroll_degree/<int:degree_id>", methods=["POST"])
@@ -697,7 +673,7 @@ def enroll_activity(activity_id):
         conn.close()
 
 
-@app.route("/enroll_course_edition/<int:course_edition_id>", methods=["POST"])
+@app.route("/dbproj/enroll_course_edition/<int:course_edition_id>", methods=["POST"])
 @student_required
 def enroll_course_edition(course_edition_id):
     data = request.get_json() or {}
@@ -800,32 +776,36 @@ def generate_top_by_district():  # Renamed from register_instructor for clarity
         # Format results
         results = []
         for row in cur.fetchall():
-            results.append({
-                "district": row[0],
-                "best_student_id": row[1],
-                "highest_average": float(row[2])  # Convert decimal to float for JSON
-            })
+            results.append(
+                {
+                    "district": row[0],
+                    "best_student_id": row[1],
+                    "highest_average": float(
+                        row[2]
+                    ),  # Convert decimal to float for JSON
+                }
+            )
 
-        return flask.jsonify({
-            "status": StatusCodes["success"],
-            "results": results
-        })
+        return flask.jsonify({"status": StatusCodes["success"], "results": results})
 
     except Exception as error:
         if conn:
             conn.rollback()
         logger.error(f"GET /top_by_district - error: {error}")
-        return flask.jsonify({
-            "status": StatusCodes["internal_error"],
-            "errors": str(error),
-            "results": None
-        })
+        return flask.jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": str(error),
+                "results": None,
+            }
+        )
     finally:
         if conn:
             conn.close()
 
 
 @app.route("/report", methods=["GET"])
+@staff_required
 def generate_report():  # Renamed from register_instructor for clarity
     conn = db_connection()
     cur = conn.cursor()
@@ -840,31 +820,111 @@ def generate_report():  # Renamed from register_instructor for clarity
         GROUP BY ep.ano;
         """)
 
-        # Format results
         results = []
         for row in cur.fetchall():
-            results.append({
-                "edição": row[0],
-                "numero": row[1]
-            })
+            results.append({"edição": row[0], "numero": row[1]})
 
-        return flask.jsonify({
-            "status": StatusCodes["success"],
-            "results": results
-        })
+        return flask.jsonify({"status": StatusCodes["success"], "results": results})
 
     except Exception as error:
         if conn:
             conn.rollback()
         logger.error(f"GET /report - error: {error}")
-        return flask.jsonify({
-            "status": StatusCodes["internal_error"],
-            "errors": str(error),
-            "results": None
-        })
+        return flask.jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": str(error),
+                "results": None,
+            }
+        )
     finally:
         if conn:
             conn.close()
+
+
+@app.route("/dbproj/submit_grades/<int:edition_id>", methods=["POST"])
+@token_required
+def submit_grades(edition_id):
+    data = request.get_json() or {}
+    if "period_id" not in data or "grades" not in data:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Missing 'period_id' or 'grades' in request",
+                "results": None,
+            }
+        ), 400
+
+    period_id = data["period_id"]
+    grades = data["grades"]
+    if not isinstance(grades, list) or any(
+        not isinstance(g, list) or len(g) != 2 for g in grades
+    ):
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "'grades' must be a list of [student_id, grade] pairs",
+                "results": None,
+            }
+        ), 400
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT coordinator FROM edition WHERE id = %s;", (edition_id,))
+        row = cur.fetchone()
+        if not row:
+            return jsonify(
+                {
+                    "status": StatusCodes["api_error"],
+                    "errors": f"Edition {edition_id} not found",
+                    "results": None,
+                }
+            ), 404
+        if row[0] != flask.g.person_id:
+            return jsonify(
+                {
+                    "status": StatusCodes["unauthorized"],
+                    "errors": "Only the edition coordinator can submit grades",
+                    "results": None,
+                }
+            ), 403
+
+        for student_id, grade in grades:
+            cur.execute(
+                """
+                INSERT INTO grades_edition_stats(
+                  students_person_id,
+                  edition_id,
+                  period_id,
+                  grade
+                )
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (students_person_id, edition_id, period_id)
+                  DO UPDATE SET grade = EXCLUDED.grade;
+                """,
+                (student_id, edition_id, period_id, grade),
+            )
+
+        conn.commit()
+        return jsonify(
+            {
+                "status": StatusCodes["success"],
+                "errors": None,
+                "results": "Grades submitted successfully",
+            }
+        ), 200
+
+    except Exception as e:
+        conn.rollback()
+        logging.error(f"POST /dbproj/submit_grades/{edition_id} - error: {e}")
+        return jsonify(
+            {"status": StatusCodes["internal_error"], "errors": str(e), "results": None}
+        ), 500
+
+    finally:
+        cur.close()
+        conn.close()
 
 
 if __name__ == "__main__":

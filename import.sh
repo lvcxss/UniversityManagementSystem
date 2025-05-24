@@ -6,11 +6,11 @@
 database="$1"
 user="$2"
 
-[[ -z "$database" ]]  && database="projeto"
-[[ -z "$user" ]]      && user="postgres"
+[[ -z "$database" ]] && database="projetofix"
+[[ -z "$user" ]] && user="postgres"
 
 for file in scripts/*.sql; do
-  psql -h localhost -p 5432 -d "$database" -U "$user" -q -f "$file" 
+  psql -h localhost -p 5432 -d "$database" -U "$user" -q -f "$file"
 done
 
 exit 0
