@@ -434,17 +434,6 @@ CREATE TABLE public.activity (
 ALTER TABLE public.activity OWNER TO aulaspl;
 
 --
--- Name: admin; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.admin (
-    staff_person_id integer NOT NULL
-);
-
-
-ALTER TABLE public.admin OWNER TO postgres;
-
---
 -- Name: attendance; Type: TABLE; Schema: public; Owner: aulaspl
 --
 
@@ -525,6 +514,18 @@ CREATE TABLE public.course (
 
 
 ALTER TABLE public.course OWNER TO aulaspl;
+
+--
+-- Name: course_edition; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.course_edition (
+    edition_id integer NOT NULL,
+    course_id integer NOT NULL
+);
+
+
+ALTER TABLE public.course_edition OWNER TO postgres;
 
 --
 -- Name: courses_degree; Type: TABLE; Schema: public; Owner: aulaspl
@@ -820,13 +821,49 @@ ALTER SEQUENCE public.person_id_seq OWNED BY public.person.id;
 
 
 --
+-- Name: practical; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.practical (
+    class_id integer NOT NULL,
+    instructor_id integer NOT NULL,
+    capacity integer NOT NULL,
+    min_attendance integer NOT NULL
+);
+
+
+ALTER TABLE public.practical OWNER TO postgres;
+
+--
+-- Name: prereq_courses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.prereq_courses (
+    course integer NOT NULL,
+    req_course integer NOT NULL
+);
+
+
+ALTER TABLE public.prereq_courses OWNER TO postgres;
+
+--
+-- Name: staff; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.staff (
+    staff_person_id integer NOT NULL
+);
+
+
+ALTER TABLE public.staff OWNER TO postgres;
+
+--
 -- Name: students; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.students (
     average real,
     numero_estudante character varying(512) NOT NULL,
-    email_estudante character varying(512) NOT NULL,
     person_id integer NOT NULL
 );
 
@@ -838,20 +875,33 @@ ALTER TABLE public.students OWNER TO postgres;
 --
 
 CREATE TABLE public.students_activity (
-    students_person_id integer NOT NULL,
-    activity_name character varying(512) NOT NULL
+    activity_id integer NOT NULL,
+    students_id integer NOT NULL
 );
 
 
 ALTER TABLE public.students_activity OWNER TO postgres;
 
 --
+-- Name: students_classes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.students_classes (
+    student_id integer NOT NULL,
+    class_id integer NOT NULL
+);
+
+
+ALTER TABLE public.students_classes OWNER TO postgres;
+
+--
 -- Name: students_degree; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.students_degree (
-    students_person_id integer NOT NULL,
-    degree_id integer NOT NULL
+    students_id integer NOT NULL,
+    degree_id integer NOT NULL,
+    staff_id integer
 );
 
 
@@ -906,6 +956,28 @@ ALTER SEQUENCE public.theory_instructors_class_class_id_seq OWNED BY public.theo
 
 
 --
+-- Name: top_students_by_district; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.top_students_by_district AS
+ WITH ranked_students AS (
+         SELECT p.district,
+            s.person_id,
+            s.average,
+            row_number() OVER (PARTITION BY p.district ORDER BY s.average DESC) AS rank
+           FROM (public.students s
+             JOIN public.person p ON ((s.person_id = p.id)))
+        )
+ SELECT district,
+    person_id,
+    average
+   FROM ranked_students
+  WHERE (rank = 1);
+
+
+ALTER VIEW public.top_students_by_district OWNER TO postgres;
+
+--
 -- Name: evaluation_period period_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -938,14 +1010,6 @@ ALTER TABLE ONLY public.theory ALTER COLUMN instructors_class_class_id SET DEFAU
 --
 
 COPY public.activity (description, id, name, cost) FROM stdin;
-\.
-
-
---
--- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.admin (staff_person_id) FROM stdin;
 \.
 
 
@@ -983,10 +1047,20 @@ COPY public.course (id, name, description, ects) FROM stdin;
 
 
 --
+-- Data for Name: course_edition; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.course_edition (edition_id, course_id) FROM stdin;
+1	1
+\.
+
+
+--
 -- Data for Name: courses_degree; Type: TABLE DATA; Schema: public; Owner: aulaspl
 --
 
 COPY public.courses_degree (course_id, degree_id) FROM stdin;
+1	1
 \.
 
 
@@ -995,6 +1069,7 @@ COPY public.courses_degree (course_id, degree_id) FROM stdin;
 --
 
 COPY public.degree (id, name, cost, description, staff_id) FROM stdin;
+1	Engenharia	2	5	21
 \.
 
 
@@ -1038,6 +1113,8 @@ COPY public.edition_stats (students_person_id, edition_id, passed) FROM stdin;
 --
 
 COPY public.employee (salario, anos_servico, active, numero_docente, person_id) FROM stdin;
+7128	4	t	uc200032	21
+9994	4	t	uc1111	24
 \.
 
 
@@ -1071,6 +1148,7 @@ COPY public.grades_edition_stats (students_person_id, edition_id, period_id, gra
 
 COPY public.instructors (area, instructor_person_id) FROM stdin;
 2x2	1
+comp sci	24
 \.
 
 
@@ -1079,6 +1157,8 @@ COPY public.instructors (area, instructor_person_id) FROM stdin;
 --
 
 COPY public.invoices (id, status, cost, staff_id, students_id) FROM stdin;
+1	f	$2.00	21	23
+2	f	\N	\N	23
 \.
 
 
@@ -1100,6 +1180,34 @@ COPY public.person (id, name, nif, cc, email_pessoal, phone, gender, password, r
 13	studenttest2	98722118421	2334	student2@gmail.com	+351 313 123 123	m	$2b$12$OVt6ZCo5qVDnmSqCGUAGGeAM53WzsRZKFHywyf6M9StjvU8VD8LQ.	student	Polo Norte	\N
 14	behelit	98724198421	12345	behelit@gmail.com	+351 123 123 123	M	$2b$12$cuRkIloBd49B8QqqtJVxm./5bo70kKKNV9lfQ47bX5c7ZP2WaCbAa	staff	California	\N
 1	joao instrutor	98724198422	3212	joao@dei.uc.pt	+351 222 222 222	m	$2b$12$bW1kBfzIpD05mCQzfhxN5OAlMIkxi/w4Qdy.RPDOb3GCfEcCgWbbO	instructor	Lisboa	\N
+21	behelitta	98724198421	1234566	behelita@gmail.com	+351 123 666 123	M	$2b$12$pAmZjdF/T3pzQ1rjalaugexyClMLhNZ7c.HuhjrRW2fOyZUmlSIzO	staff	\N	behelita23@uc.pt
+23	slk	218128	122111	sk@skbu.com	+999 133 156 563	M	$2b$12$rd92MaQlLqFu6133w5BWFuwSZSuRs3Nvy3Ko28UxYuqTWm7PTo8O6	student	\N	cmi@uc.pt
+24	cleverson	522	9251	2@skbi.com	+351 111 223 123	M	$2b$12$tyRfQljuq/DztPk3J/6oiemu1PaeFcb3Iqj/K.piVIMZjm/fbAUlW	instructor	\N	cuh@uc.pt
+\.
+
+
+--
+-- Data for Name: practical; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.practical (class_id, instructor_id, capacity, min_attendance) FROM stdin;
+\.
+
+
+--
+-- Data for Name: prereq_courses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.prereq_courses (course, req_course) FROM stdin;
+\.
+
+
+--
+-- Data for Name: staff; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.staff (staff_person_id) FROM stdin;
+21
 \.
 
 
@@ -1107,9 +1215,10 @@ COPY public.person (id, name, nif, cc, email_pessoal, phone, gender, password, r
 -- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.students (average, numero_estudante, email_estudante, person_id) FROM stdin;
-10	123412678	studenttest@ucstudent.com	11
-10	123412678	studenttest2@ucstudent.com	13
+COPY public.students (average, numero_estudante, person_id) FROM stdin;
+10	123412678	11
+10	123412678	13
+17	uc232442	23
 \.
 
 
@@ -1117,7 +1226,16 @@ COPY public.students (average, numero_estudante, email_estudante, person_id) FRO
 -- Data for Name: students_activity; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.students_activity (students_person_id, activity_name) FROM stdin;
+COPY public.students_activity (activity_id, students_id) FROM stdin;
+1	23
+\.
+
+
+--
+-- Data for Name: students_classes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.students_classes (student_id, class_id) FROM stdin;
 \.
 
 
@@ -1125,7 +1243,8 @@ COPY public.students_activity (students_person_id, activity_name) FROM stdin;
 -- Data for Name: students_degree; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.students_degree (students_person_id, degree_id) FROM stdin;
+COPY public.students_degree (students_id, degree_id, staff_id) FROM stdin;
+23	1	21
 \.
 
 
@@ -1177,14 +1296,14 @@ SELECT pg_catalog.setval('public.evaluation_period_period_id_seq', 1, false);
 -- Name: invoices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aulaspl
 --
 
-SELECT pg_catalog.setval('public.invoices_id_seq', 1, false);
+SELECT pg_catalog.setval('public.invoices_id_seq', 2, true);
 
 
 --
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.person_id_seq', 19, true);
+SELECT pg_catalog.setval('public.person_id_seq', 26, true);
 
 
 --
@@ -1203,10 +1322,10 @@ ALTER TABLE ONLY public.activity
 
 
 --
--- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: staff admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.admin
+ALTER TABLE ONLY public.staff
     ADD CONSTRAINT admin_pkey PRIMARY KEY (staff_person_id);
 
 
@@ -1224,6 +1343,14 @@ ALTER TABLE ONLY public.class
 
 ALTER TABLE ONLY public.class_schedule
     ADD CONSTRAINT class_schedule_pkey PRIMARY KEY (weekday, start, class_id);
+
+
+--
+-- Name: course_edition course_edition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_edition
+    ADD CONSTRAINT course_edition_pkey PRIMARY KEY (edition_id, course_id);
 
 
 --
@@ -1339,11 +1466,35 @@ ALTER TABLE ONLY public.person
 
 
 --
+-- Name: practical practical_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.practical
+    ADD CONSTRAINT practical_pkey PRIMARY KEY (class_id);
+
+
+--
+-- Name: prereq_courses prereq_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prereq_courses
+    ADD CONSTRAINT prereq_courses_pkey PRIMARY KEY (course, req_course);
+
+
+--
 -- Name: students_activity students_activity_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.students_activity
-    ADD CONSTRAINT students_activity_pkey PRIMARY KEY (students_person_id, activity_name);
+    ADD CONSTRAINT students_activity_pkey PRIMARY KEY (activity_id);
+
+
+--
+-- Name: students_classes students_classes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_classes
+    ADD CONSTRAINT students_classes_pkey PRIMARY KEY (student_id, class_id);
 
 
 --
@@ -1351,7 +1502,7 @@ ALTER TABLE ONLY public.students_activity
 --
 
 ALTER TABLE ONLY public.students_degree
-    ADD CONSTRAINT students_degree_pkey PRIMARY KEY (students_person_id, degree_id);
+    ADD CONSTRAINT students_degree_pkey PRIMARY KEY (students_id, degree_id);
 
 
 --
@@ -1360,14 +1511,6 @@ ALTER TABLE ONLY public.students_degree
 
 ALTER TABLE ONLY public.students_edition
     ADD CONSTRAINT students_edition_pkey PRIMARY KEY (student_id, edition_id);
-
-
---
--- Name: students students_numero_estudante_email_estudante_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.students
-    ADD CONSTRAINT students_numero_estudante_email_estudante_key UNIQUE (numero_estudante, email_estudante);
 
 
 --
@@ -1409,6 +1552,22 @@ CREATE TRIGGER trg_create_invoice_degree AFTER INSERT ON public.students_degree 
 
 
 --
+-- Name: course_edition ce_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_edition
+    ADD CONSTRAINT ce_fk FOREIGN KEY (edition_id) REFERENCES public.edition(id);
+
+
+--
+-- Name: course_edition ce_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_edition
+    ADD CONSTRAINT ce_fk1 FOREIGN KEY (course_id) REFERENCES public.course(id);
+
+
+--
 -- Name: edition coordinator id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
 --
 
@@ -1417,19 +1576,19 @@ ALTER TABLE ONLY public.edition
 
 
 --
+-- Name: prereq_courses cour_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prereq_courses
+    ADD CONSTRAINT cour_fk FOREIGN KEY (course) REFERENCES public.course(id) NOT VALID;
+
+
+--
 -- Name: edition course id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
 --
 
 ALTER TABLE ONLY public.edition
     ADD CONSTRAINT "course id" FOREIGN KEY (course_id) REFERENCES public.course(id) NOT VALID;
-
-
---
--- Name: degree degree_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.degree
-    ADD CONSTRAINT degree_fk1 FOREIGN KEY (staff_id) REFERENCES public.admin(staff_person_id);
 
 
 --
@@ -1481,6 +1640,22 @@ ALTER TABLE ONLY public.instructors
 
 
 --
+-- Name: prereq_courses req_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prereq_courses
+    ADD CONSTRAINT req_fk FOREIGN KEY (req_course) REFERENCES public.course(id) NOT VALID;
+
+
+--
+-- Name: students_degree staff_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_degree
+    ADD CONSTRAINT staff_id_fk FOREIGN KEY (staff_id) REFERENCES public.staff(staff_person_id) NOT VALID;
+
+
+--
 -- Name: edition_stats student person id; Type: FK CONSTRAINT; Schema: public; Owner: aulaspl
 --
 
@@ -1497,11 +1672,11 @@ ALTER TABLE ONLY public.students_edition
 
 
 --
--- Name: students_activity students_activity_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: students_activity students_activity_students_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.students_activity
-    ADD CONSTRAINT students_activity_fk1 FOREIGN KEY (students_person_id) REFERENCES public.students(person_id);
+    ADD CONSTRAINT students_activity_students_id_fkey FOREIGN KEY (students_id) REFERENCES public.students(person_id) NOT VALID;
 
 
 --
@@ -1509,7 +1684,7 @@ ALTER TABLE ONLY public.students_activity
 --
 
 ALTER TABLE ONLY public.students_degree
-    ADD CONSTRAINT students_degree_fk1 FOREIGN KEY (students_person_id) REFERENCES public.students(person_id);
+    ADD CONSTRAINT students_degree_fk1 FOREIGN KEY (students_id) REFERENCES public.students(person_id);
 
 
 --
@@ -1518,6 +1693,22 @@ ALTER TABLE ONLY public.students_degree
 
 ALTER TABLE ONLY public.students_degree
     ADD CONSTRAINT students_degree_fk2 FOREIGN KEY (degree_id) REFERENCES public.degree(id);
+
+
+--
+-- Name: students_classes students_ed_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_classes
+    ADD CONSTRAINT students_ed_fk FOREIGN KEY (student_id) REFERENCES public.students(person_id) ON DELETE CASCADE NOT VALID;
+
+
+--
+-- Name: students_classes students_ed_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.students_classes
+    ADD CONSTRAINT students_ed_fk1 FOREIGN KEY (class_id) REFERENCES public.class(class_id) NOT VALID;
 
 
 --

@@ -523,7 +523,7 @@ def view_person_info():
     ), 200
 
 
-@app.route("/top-students", methods=["GET"])
+@app.route("/dbproj/top3", methods=["GET"])
 def show_top_students():
     conn = db_connection()
     cur = conn.cursor()
@@ -744,34 +744,14 @@ def delete_details(student_id):
     return jsonify({"status": StatusCodes["success"], "errors": None}), 204
 
 
-@app.route("/top_by_district", methods=["GET"])
+@app.route("/dbproj/top_by_district", methods=["GET"])
 def generate_top_by_district():  # Renamed from register_instructor for clarity
     conn = db_connection()
     cur = conn.cursor()
 
     try:
         # Execute the best student query
-        cur.execute("""
-            WITH ranked_students AS (
-                SELECT 
-                    p.district,
-                    s.person_id,
-                    s.average,
-                    ROW_NUMBER() OVER (
-                        PARTITION BY p.district 
-                        ORDER BY s.average DESC
-                    ) AS rank
-                FROM students s
-                JOIN person p 
-                    ON s.person_id = p.id
-            )
-            SELECT 
-                district,
-                person_id,
-                average
-            FROM ranked_students
-            WHERE rank = 1;
-        """)
+        cur.execute("SELECT * FROM top_students_by_district")
 
         # Format results
         results = []
@@ -804,21 +784,14 @@ def generate_top_by_district():  # Renamed from register_instructor for clarity
             conn.close()
 
 
-@app.route("/report", methods=["GET"])
+@app.route("/dbproj/report", methods=["GET"])
 @staff_required
 def generate_report():  # Renamed from register_instructor for clarity
     conn = db_connection()
     cur = conn.cursor()
 
     try:
-        cur.execute("""
-        SELECT ep.ano AS ano, COUNT(*) AS passed_students_count FROM edition_stats es
-        JOIN students_degree sd ON es.students_person_id = sd.students_person_id 
-        JOIN degree dg ON dg.id = sd.degree_id 
-        JOIN edition_practical_assistant_instructors_course ep ON ep.instructors_class_epaaicsicsp = dg.epaaicsicsp 
-        WHERE es.passed = TRUE
-        GROUP BY ep.ano;
-        """)
+        cur.execute("SELECT * FROM public.passed_students_by_edition")
 
         results = []
         for row in cur.fetchall():
@@ -829,7 +802,7 @@ def generate_report():  # Renamed from register_instructor for clarity
     except Exception as error:
         if conn:
             conn.rollback()
-        logger.error(f"GET /report - error: {error}")
+        logger.error(f"GET /dbproj/report - error: {error}")
         return flask.jsonify(
             {
                 "status": StatusCodes["internal_error"],
