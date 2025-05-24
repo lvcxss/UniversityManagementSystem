@@ -160,24 +160,92 @@ Depois de fazer download do PostgreSQL installer carregar duas vezes onde foi gu
   10. Carreger em Finish
 \end{minipage}
 
-
-
+\newpage
 \section{User Manual}
 
-\subsection{Request 1}
-\vspace{1em}
+\newcommand\PUT{{\bfseries\color{Blue} PUT}}
+\newcommand\POST{{\bfseries\color{BurntOrange} POST}}
+\newcommand\GET{{\bfseries\color{Green} GET}}
+\newcommand\DELETE{{\bfseries\color{Maroon} DELETE}}
 
-\subsubsection{}
-\begin{lstlisting}[language=json]
-{
-    "name":"guts",
-    "email": "guts@gmail.com",
-    "phone": "+351 123 123 123",
-    "cc" : 12345,
-    "nif" : 98724198421,
-    "password" : "password", 
-    "gender" : "female"
+\newcommand\requestpar[4]{
+  \vspace{0.5em}
+  \noindent
+  {#1} \href{http://localhost:8080#2}{#2}\\{#3}
+  \vspace{0.5em}
+  \ifx\relax#4\relax\else
+    \par\hfill\begin{minipage}{0.95\textwidth}
+    {\texttt{#4}}
+    \end{minipage} 
+  \fi
+  \par
+  \vspace{1em}
 }
-\end{lstlisting}
+
+\subsection{Overview dos Endpoints}
+\requestpar{\PUT}{/dbproj/user}{Faz o login do utilizador, seja aluno, administrador ou docente, devolve um token correspondente.}{\{   "email": "behelita23@uc.pt", "password": "123" \}}
+\requestpar{\POST}{/dbproj/register/student}{Regista um estudante novo, requer token de administrador.}{
+\{
+    "name":"slk",
+    "email": "sk@skbu.com",
+    "phone": "+999 133 156 563",
+    "cc" : 122111,
+    "nif" : 218128,
+    "password" : "123", 
+    "gender" : "M",
+    "email\_institucional": "cmi@uc.pt", 
+    "numero\_estudante" : "uc232442", 
+    "average" : 17
+\}
+}
+\requestpar{\POST}{/dbproj/register/staff}{Regista um administrador novo, requer token de administrador.}{
+\{
+  "name":"behelitta",
+  "email": "behelita@gmail.com",
+  "phone": "+351 123 666 123",
+  "cc" : 1234566,
+  "nif" : 98724198421,
+  "password" : "123",
+  "gender" : "M",
+  "email\_institucional" : "behelita23@uc.pt",
+  "numero\_docente" : "uc200032",
+  "salario" : 7128,
+  "anos\_servico" : 4,
+  "active" : true
+\}}
+\requestpar{\POST}{/dbproj/register/instructor}{Regista um docente novo, requer token de administrador.}{
+\{
+    "name":"cleverson",
+    "email": "2@skbi.com",
+    "phone": "+351 111 223 123",
+    "cc" : 9251,
+    "nif" : 522,
+    "password" : "123", 
+    "gender" : "M",
+    "email\_institucional" : "cuh@uc.pt",
+    "numero\_docente" : "uc1111",
+    "salario" : 9994, 
+    "anos\_servico" : 4, 
+    "active" : true,
+    "area" : "comp sci"
+\}
+}
+\requestpar{\POST}{/dbproj/enroll\_degree/<degree\_id>}{Permite registar um utilizador num curso.}{
+\{ "student\_id":9 \}}
+\requestpar{\POST}{/dbproj/enroll\_activity/<activity\_id>}{Permite ao utilizador que fez login registar numa atividade.}{}
+\requestpar{\POST}{/dbproj/enroll\_course\_edition/<course\_edition\_id>}{Permite ao utilizador que fez login registar em turmas.}{\{ "classes": [1, 2]
+\}}
+\requestpar{\POST}{/dbproj/submit\_grades/<course\_edition\_id>}{Permite ao regente da edição da cadeira submeter notas para os alunos.}{
+  \{
+    "period\_id": 1,
+    "grades": [[23, 1]]
+\}}
+\requestpar{\GET}{/dbproj/student\_details/<student\_id>}{Devolve informação sobre as cadeiras em que o aluno está inscrito.}{}
+\requestpar{\GET}{/dbproj/degree\_details/<degree\_id>}{Devolve informação sobre o curso e as respectivas edições.}{}
+\requestpar{\GET}{/dbproj/top3}{Devolve os 3 melhores alunos do ano lectivo atual organizados por curso e atividades.}{}
+
+\requestpar{\GET}{/dbproj/top\_by\_district/}{Devolve os melhores alunos de cada districto.}{}
+\requestpar{\GET}{/dbproj/report}{Devolve as edições com o maior número de aprovações por mês.}{}
+\requestpar{\DELETE}{/dbproj/delete\_details/<student\_id>}{Apaga o utilizador.}{}
 
 \end{document}
