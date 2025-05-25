@@ -885,7 +885,9 @@ def submit_grades(edition_id):
     conn = db_connection()
     cur = conn.cursor()
     try:
-        cur.execute("SELECT coordinator FROM edition WHERE id = %s;", (edition_id,))
+        cur.execute(
+            "SELECT coordinator FROM edition WHERE id = %s FOR UPDATE;", (edition_id,)
+        )
         row = cur.fetchone()
         if not row:
             return jsonify(
@@ -905,6 +907,17 @@ def submit_grades(edition_id):
             ), 403
 
         for student_id, grade in grades:
+            cur.execute(
+                """
+                SELECT 1 
+                FROM grades_edition_stats 
+                WHERE students_person_id = %s 
+                  AND edition_id = %s 
+                  AND period_id = %s 
+                FOR UPDATE;
+            """,
+                (student_id, edition_id, period_id),
+            )
             cur.execute(
                 """
                 INSERT INTO grades_edition_stats(
@@ -928,6 +941,16 @@ def submit_grades(edition_id):
                 "results": "Grades submitted successfully",
             }
         ), 200
+
+    except ForeignKeyViolation:
+        conn.rollback()
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "At least one of the students is not enrolled in this edition",
+                "results": None,
+            }
+        ), 400
 
     except Exception as e:
         conn.rollback()

@@ -90,11 +90,11 @@ DECLARE
   v_enrolled_count  INTEGER;
 BEGIN
   -- obter course edition 
-  SELECT ce.course_id
-    INTO v_course_id
-  FROM course_edition ce
-  WHERE ce.edition_id = p_edition_id;
-  IF NOT FOUND THEN
+    SELECT ce.course_id INTO v_course_id
+    FROM course_edition ce
+    WHERE ce.edition_id = p_edition_id
+	FOR UPDATE;
+	IF NOT FOUND THEN
     RETURN QUERY SELECT 'error', 'Edition '||p_edition_id||' not found';
     RETURN;
   END IF;
@@ -142,29 +142,26 @@ BEGIN
   RETURN;
 	END IF;
 
-  -- 4) capacidade da turma
+  -- capacidade da turma
   FOREACH v_class_id IN ARRAY p_class_ids LOOP
-    SELECT p.capacity
-      INTO v_capacity
-      FROM practical p
-     WHERE p.class_id = v_class_id;
-    IF NOT FOUND THEN
-      v_capacity := NULL;  -- sem limite
-    END IF;
+    SELECT p.capacity INTO v_capacity
+    FROM practical p
+    WHERE p.class_id = v_class_id;
 
-    SELECT COUNT(*) 
-      INTO v_enrolled_count
-      FROM students_classes sc
-     WHERE sc.class_id = v_class_id;
-
-    IF v_capacity IS NOT NULL
-       AND v_enrolled_count >= v_capacity
-    THEN
-      RETURN QUERY
-      SELECT 'error', 'Class ID '||v_class_id||' is full';
-      RETURN;
+    IF v_capacity IS NOT NULL THEN
+        PERFORM 1 
+        FROM practical p 
+        WHERE p.class_id = v_class_id 
+        FOR UPDATE;
+        SELECT COUNT(*) INTO v_enrolled_count
+        FROM students_classes sc
+        WHERE sc.class_id = v_class_id;
+        IF v_enrolled_count >= v_capacity THEN
+            RETURN QUERY SELECT 'error', 'Class ID '||v_class_id||' is full';
+            RETURN;
+        END IF;
     END IF;
-  END LOOP;
+END LOOP;
 
   -- 5) overlays de horarios
   DROP TABLE IF EXISTS tmp_req;
@@ -479,24 +476,53 @@ CREATE FUNCTION public.update_passed_status() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
-  total_weighted NUMERIC;
+    recurso_grade NUMERIC;  
+    total_weighted NUMERIC; 
 BEGIN
-  SELECT SUM(g.grade * p.weight_pct / 100)
-    INTO total_weighted
-  FROM grades_edition_stats g
-  JOIN evaluation_period p
-    ON g.period_id = p.period_id
-   AND g.students_person_id = NEW.students_person_id
-   AND g.edition_id         = NEW.edition_id;
-  IF total_weighted >= 50 THEN
-    UPDATE edition_stats
-       SET passed = TRUE
-     WHERE students_person_id = NEW.students_person_id
-       AND edition_id         = NEW.edition_id
-       AND passed             = FALSE;
-  END IF;
+    --verificar se ha nota de recurso (id 4)
+    SELECT grade INTO recurso_grade
+    FROM grades_edition_stats
+    WHERE students_person_id = NEW.students_person_id
+      AND edition_id = NEW.edition_id
+      AND period_id = 4;
 
-  RETURN NEW;
+    
+    IF FOUND THEN
+        IF recurso_grade >= 50 THEN
+            UPDATE edition_stats
+               SET passed = TRUE
+             WHERE students_person_id = NEW.students_person_id
+               AND edition_id = NEW.edition_id;
+        ELSE
+            UPDATE edition_stats
+               SET passed = FALSE
+             WHERE students_person_id = NEW.students_person_id
+               AND edition_id = NEW.edition_id;
+        END IF;
+    ELSE
+        --media fora do recurso
+        SELECT SUM(g.grade * p.weight_pct / 100)
+          INTO total_weighted
+          FROM grades_edition_stats g
+          JOIN evaluation_period p 
+            ON g.period_id = p.period_id
+         WHERE g.students_person_id = NEW.students_person_id
+           AND g.edition_id = NEW.edition_id
+           AND g.period_id != 4;  
+        IF total_weighted >= 50 THEN
+            UPDATE edition_stats
+               SET passed = TRUE
+             WHERE students_person_id = NEW.students_person_id
+               AND edition_id = NEW.edition_id;
+        ELSE
+            UPDATE edition_stats
+               SET passed = FALSE
+             WHERE students_person_id = NEW.students_person_id
+               AND edition_id = NEW.edition_id;
+        END IF;
+    END IF;
+
+    RETURN NEW;
 END;
 $$;
 
@@ -1068,6 +1094,7 @@ ALTER TABLE ONLY public.person ALTER COLUMN id SET DEFAULT nextval('public.perso
 --
 
 COPY public.activity (description, id, name, cost) FROM stdin;
+febrada by nei (bar aberto)	1	febrada	$5.99
 \.
 
 
@@ -1169,6 +1196,7 @@ COPY public.edition_instructors (editon_id, instructor_id) FROM stdin;
 COPY public.edition_stats (students_person_id, edition_id, passed, month) FROM stdin;
 11	1	t	1
 13	1	f	1
+37	1	t	1
 \.
 
 
@@ -1193,7 +1221,10 @@ COPY public.employee (salario, anos_servico, active, numero_docente, person_id) 
 --
 
 COPY public.evaluation_period (period_id, name, weight_pct) FROM stdin;
-1	periodo	4.00
+1	teste pratico	20.00
+2	projeto	40.00
+3	teste teorico	40.00
+4	recurso	100.00
 \.
 
 
@@ -1210,6 +1241,10 @@ COPY public.grades (grade, weight) FROM stdin;
 --
 
 COPY public.grades_edition_stats (students_person_id, edition_id, period_id, grade) FROM stdin;
+37	1	1	10.00
+37	1	2	10.00
+37	1	3	10.00
+37	1	4	50.00
 \.
 
 
@@ -1230,7 +1265,8 @@ comp sci	39
 
 COPY public.invoices (id, status, cost, staff_id, students_id) FROM stdin;
 1	f	$2.00	21	23
-2	f	\N	\N	23
+3	f	$2.00	21	37
+4	f	$5.99	\N	37
 \.
 
 
@@ -1311,6 +1347,7 @@ COPY public.students (average, numero_estudante, person_id) FROM stdin;
 --
 
 COPY public.students_activity (activity_id, students_id) FROM stdin;
+1	37
 \.
 
 
@@ -1319,6 +1356,7 @@ COPY public.students_activity (activity_id, students_id) FROM stdin;
 --
 
 COPY public.students_classes (student_id, class_id) FROM stdin;
+37	2
 \.
 
 
@@ -1327,6 +1365,7 @@ COPY public.students_classes (student_id, class_id) FROM stdin;
 --
 
 COPY public.students_degree (students_id, degree_id, staff_id) FROM stdin;
+37	1	21
 \.
 
 
@@ -1378,7 +1417,7 @@ SELECT pg_catalog.setval('public.evaluation_period_period_id_seq', 1, false);
 -- Name: invoices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.invoices_id_seq', 2, true);
+SELECT pg_catalog.setval('public.invoices_id_seq', 4, true);
 
 
 --
@@ -1648,6 +1687,13 @@ CREATE TRIGGER trg_create_invoice_activity AFTER INSERT ON public.students_activ
 --
 
 CREATE TRIGGER trg_create_invoice_degree AFTER INSERT ON public.students_degree FOR EACH ROW EXECUTE FUNCTION public.create_invoice_degree();
+
+
+--
+-- Name: grades_edition_stats trg_update_passed_status; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER trg_update_passed_status AFTER INSERT OR UPDATE ON public.grades_edition_stats FOR EACH ROW EXECUTE FUNCTION public.update_passed_status();
 
 
 --
