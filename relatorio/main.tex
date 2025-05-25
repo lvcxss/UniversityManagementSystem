@@ -99,20 +99,14 @@ O último possível conflito já é resolvido com as transações. Caso o aluno 
 \end{enumerate}
 
 
-\section{Installation Manual}
+\section{Manual de Instalação}
 % For example, Tristan Tate, pulled up a video, his favorite whiskey, Johnnie Walker. What do I do at duty-free? Fucking Johnnie Walker. That night, sipping the fucking Johnnie Walker in the war room by myself with him chilling. Why? I studied, bro.
 
-\subsection{Clone Python API and Install Dependencies}
-\texttt{git clone https://github.com/lvcxss/UniversityManagementSystem\\pip install -r requirements.txt}
+\subsection{Instalar PostreSQL}
 
-\subsection{Installing PostgreSQL and creating the needed tables}
-\subsubsection{Installing PostgreSQL}
-\textbf{Step 1: Downloading PostgreSQL Installer}
-Download the latest stable PostgreSQL Installer for Windows:www.enterprisedb.com/downloads/postgres-postgresql-downloads
+\subsubsection{Windows}
 
-\textbf{Step 2:Installing the PostgreSQL installer}
-Depois de fazer download do PostgreSQL installer carregar duas vezes onde foi guardado o ficheiro, para abrir o PostgreSQL installer.
-\textbf{Step 3: Navegar o installer}
+Faz download do instalador: \href{https://www.enterprisedb.com/downloads/postgres-postgresql-downloads}{www.enterprisedb.com/downloads/postgres-postgresql-downloads}
 
 % \newpage
 \begin{minipage}{0.45\textwidth}
@@ -160,14 +154,26 @@ Depois de fazer download do PostgreSQL installer carregar duas vezes onde foi gu
   10. Carreger em Finish
 \end{minipage}
 
-\vspace{1em}
+\subsubsection{Linux}
 
-\subsection{Creating the needed features of the Database}
-Now open SQL shell and enter with your PostgreSQL database and copy and paste this:
+\noindent\textbf{Debian-based:}\\
+\texttt{sudo apt install postgresq}
 
-\texttt{pg\_dump -h localhost -p 5432 -U "insert\_your\_user\_name" -d "insert\_your\_database\_name" -f backup.sql }
+\noindent\textbf{Arch-based:}\\
+\texttt{sudo pacman -S postgresql\\
+sudo -u postgres initdb -D /var/lib/postgres/data\\
+sudo systemctl start postgresql}
 
-This will create the needed triggers, functions and tables for running the code.
+\subsection{Python API e Importar o esqueleto da base de dados}
+\texttt{git clone \href{https://github.com/lvcxss/UniversityManagementSystem}{https://github.com/lvcxss/UniversityManagementSystem}\\cd UniversityManagementSystem/API\\pip install -r requirements.txt}\\
+
+\noindent
+\texttt{cd ..\\
+createdb -U postgres -h localhost -p 5432 --template=template0 projeto\\
+psql -h localhost -p 5432 -U "postgres" -d "projeto" -f backup.sql}\\
+
+\noindent
+Isto irá importar as tabelas, os triggers, as functions, as sequences e as views necessárias.
 
 \newpage
 \section{User Manual}
