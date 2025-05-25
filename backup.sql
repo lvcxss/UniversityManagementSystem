@@ -2,12 +2,13 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.8
--- Dumped by pg_dump version 16.8
+-- Dumped from database version 17.4
+-- Dumped by pg_dump version 17.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -345,8 +346,7 @@ ALTER FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, 
 
 CREATE FUNCTION public.get_course_editions_by_degree(p_degree_id integer) RETURNS TABLE(course_id integer, course_name character varying, degree_id integer, edition_id integer, year integer, total_capacity bigint, degree_count bigint, passed_students_count bigint, coordinator integer, staff_person_id integer)
     LANGUAGE plpgsql
-    AS $$
-BEGIN
+    AS $$BEGIN
     RETURN QUERY
     SELECT 
         c.id AS course_id,
@@ -387,8 +387,7 @@ BEGIN
         e.ano,
         e.coordinator,
         dc.theory_instructors_class_staff_person_id;
-END;
-$$;
+END;$$;
 
 
 ALTER FUNCTION public.get_course_editions_by_degree(p_degree_id integer) OWNER TO postgres;
@@ -1121,7 +1120,8 @@ COPY public.class (class_id, name, edition_id) FROM stdin;
 --
 
 COPY public.class_schedule (class_id, department, classroom, start, "end", weekday) FROM stdin;
-1	dei	1	23:00:00	21:00:00	1
+1	dei	dei	23:00:00	21:00:00	1
+2	deec	dei	22:00:00	23:00:00	2
 \.
 
 
@@ -1166,7 +1166,8 @@ COPY public.degree (id, name, cost, description, staff_id) FROM stdin;
 --
 
 COPY public.department_classroom (dep_id, name, classroom_capacity, classroom_location, theory_instructors_class_staff_person_id) FROM stdin;
-1	c.5.2	50	texas	1
+1	dei	50	texas	1
+2	dei	30	dei	1
 \.
 
 
@@ -1213,6 +1214,16 @@ COPY public.employee (salario, anos_servico, active, numero_docente, person_id) 
 7128	4	t	uc222469	31
 7128	4	t	uc222433369	38
 9994	4	t	uc122111	39
+7128	4	t	uc200032	21
+9994	4	t	uc1111	24
+7128	4	t	uc222422	28
+7128	4	t	uc222469	29
+7128	4	t	uc222469	30
+7128	4	t	uc222469	31
+7128	4	t	uc222433369	38
+9994	4	t	uc122111	39
+7128	4	t	uc200032	42
+9994	4	t	uc1111	45
 \.
 
 
@@ -1256,6 +1267,7 @@ COPY public.instructors (area, instructor_person_id) FROM stdin;
 2x2	1
 comp sci	24
 comp sci	39
+comp sci	45
 \.
 
 
@@ -1267,6 +1279,8 @@ COPY public.invoices (id, status, cost, staff_id, students_id) FROM stdin;
 1	f	$2.00	21	23
 3	f	$2.00	21	37
 4	f	$5.99	\N	37
+5	f	$2.00	21	11
+6	f	$2.00	21	43
 \.
 
 
@@ -1297,6 +1311,8 @@ COPY public.person (id, name, nif, cc, email_pessoal, phone, gender, password, r
 37	slq2232	$2b$12$pnyCIVVoPb07G3igN9/7bugHcGpKqxD.rJLA1KRL3VIPKoOzHm/GC	$2b$12$E6FA3OygkluwHmxRkjI4OeTuIGLQW5LnwvzkTnmX1hhFV6Lrq8RRm	sk@ask22u32.com	+999 123 155 763	M	$2b$12$cVEtv9rRggyDEBoM6A654ec4zIX.VuTKWvyECk.GRKNTAHm8kG426	student	\N	cmi2112222@uc.pt
 38	bet2a	$2b$12$/W.gqRhLUXoj3KmiXWUg2OfiERytI2tKBve5QEVdTeUeQvArPI4LC	$2b$12$7jdTB7VaYoL//TPkQi.COOneKRtGuVoExHNZ/slKGuH36WOL9rl7m	beta421@gmail.com	+351 112 226 123	M	$2b$12$y9HwTf/3ZNZfr0LfDuD.f.znfCMlnjpnbuRg/QqTMmmcq.4n23F2C	staff	\N	beta369@uc.pt
 39	cleversontemsp	$2b$12$rvPtKtJZrOG19FqNrfX3gOQFW6U8duMhLuU1HyJAjtuetHm6kraj2	$2b$12$jXcA6sQGT7q3fLKmyPk3VO1oLvGhVejzdWvpjdGYZvaBzLGDrhkRa	2@skbdi.com	+351 122 223 123	M	$2b$12$erZOorZ.Rh9qAPGQWvQBmOpjQZKElteACW4hTfhVlZ5nJKmTkY1fC	instructor	\N	cuh22@uc.pt
+42	petergrifin	$2b$12$VRJRa4EQG/o6BTCM4C/4K.AtUi9wUxkIXJBlVbYEalqIBF83m6dry	$2b$12$cP0snop4J06BPCcxd14uxuqa5m./F2eBG3UOS2OC3IRa6jdw1TARW	petergriffin@gmail.com	+351 420 666 123	M	$2b$12$8ULDWVpFLRvo8sCqxiCebOAWOuAskFzTewRxGHiMPEfM20bE6rYwi	staff	\N	petergrifin23@uc.pt
+45	joaoinstrutor	$2b$12$AzRVZYMWyCbtPwblpAaYgu6YALswfgU4tjhbkdEsKDeS6v.uJkL/a	$2b$12$rEbcd58DuYECKjJ28gsCEeVO/dwv9S.tbo/XdRrb4nDHv/OZ0C7Ne	joaoinstrutor@skbi.com	+351 111 223 123	M	$2b$12$MLFbZnwJxLkEbd4CPTXBoOv0iZVOr/kJ0Imi.wpa.1khjJNEW8DEK	instructor	\N	joaoinstrutor@uc.pt
 \.
 
 
@@ -1305,6 +1321,8 @@ COPY public.person (id, name, nif, cc, email_pessoal, phone, gender, password, r
 --
 
 COPY public.practical (class_id, instructor_id, capacity, min_attendance) FROM stdin;
+1	1	13	13
+2	1	3123	32
 \.
 
 
@@ -1327,6 +1345,7 @@ COPY public.staff (staff_person_id) FROM stdin;
 30
 31
 38
+42
 \.
 
 
@@ -1366,6 +1385,7 @@ COPY public.students_classes (student_id, class_id) FROM stdin;
 
 COPY public.students_degree (students_id, degree_id, staff_id) FROM stdin;
 37	1	21
+11	1	21
 \.
 
 
@@ -1417,14 +1437,14 @@ SELECT pg_catalog.setval('public.evaluation_period_period_id_seq', 1, false);
 -- Name: invoices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.invoices_id_seq', 4, true);
+SELECT pg_catalog.setval('public.invoices_id_seq', 6, true);
 
 
 --
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.person_id_seq', 40, true);
+SELECT pg_catalog.setval('public.person_id_seq', 45, true);
 
 
 --
@@ -1897,49 +1917,49 @@ GRANT ALL ON FUNCTION public.create_invoice_degree() TO app_admin;
 -- Name: FUNCTION enroll_course_edition(p_student_person_id integer, p_edition_id integer, p_class_ids integer[]); Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON FUNCTION public.enroll_course_edition(p_student_person_id integer, p_edition_id integer, p_class_ids integer[]) TO app_student;
 GRANT ALL ON FUNCTION public.enroll_course_edition(p_student_person_id integer, p_edition_id integer, p_class_ids integer[]) TO app_admin;
+GRANT ALL ON FUNCTION public.enroll_course_edition(p_student_person_id integer, p_edition_id integer, p_class_ids integer[]) TO app_student;
 
 
 --
 -- Name: FUNCTION fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text); Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) TO app_staff;
 GRANT ALL ON FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) TO app_admin;
+GRANT ALL ON FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) TO app_staff;
 
 
 --
 -- Name: FUNCTION fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean); Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) TO app_staff;
 GRANT ALL ON FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) TO app_admin;
+GRANT ALL ON FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) TO app_staff;
 
 
 --
 -- Name: FUNCTION fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real); Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) TO app_staff;
 GRANT ALL ON FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) TO app_admin;
+GRANT ALL ON FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) TO app_staff;
 
 
 --
 -- Name: FUNCTION get_course_editions_by_degree(p_degree_id integer); Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON FUNCTION public.get_course_editions_by_degree(p_degree_id integer) TO app_staff;
 GRANT ALL ON FUNCTION public.get_course_editions_by_degree(p_degree_id integer) TO app_admin;
+GRANT ALL ON FUNCTION public.get_course_editions_by_degree(p_degree_id integer) TO app_staff;
 
 
 --
 -- Name: FUNCTION get_student_courses(student_id_param integer); Type: ACL; Schema: public; Owner: postgres
 --
 
+GRANT ALL ON FUNCTION public.get_student_courses(student_id_param integer) TO app_admin;
 GRANT ALL ON FUNCTION public.get_student_courses(student_id_param integer) TO app_student;
 GRANT ALL ON FUNCTION public.get_student_courses(student_id_param integer) TO app_staff;
-GRANT ALL ON FUNCTION public.get_student_courses(student_id_param integer) TO app_admin;
 
 
 --
@@ -2152,8 +2172,8 @@ GRANT ALL ON TABLE public.lesson TO app_admin;
 -- Name: TABLE passed_students_by_edition; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT SELECT ON TABLE public.passed_students_by_edition TO app_staff;
 GRANT ALL ON TABLE public.passed_students_by_edition TO app_admin;
+GRANT SELECT ON TABLE public.passed_students_by_edition TO app_staff;
 
 
 --
@@ -2247,8 +2267,8 @@ GRANT ALL ON TABLE public.theory TO app_admin;
 -- Name: TABLE top_students_by_district; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT SELECT ON TABLE public.top_students_by_district TO app_staff;
 GRANT ALL ON TABLE public.top_students_by_district TO app_admin;
+GRANT SELECT ON TABLE public.top_students_by_district TO app_staff;
 
 
 --
