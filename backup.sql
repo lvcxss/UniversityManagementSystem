@@ -230,7 +230,7 @@ ALTER FUNCTION public.enroll_course_edition(p_student_person_id integer, p_editi
 -- Name: fn_register_instructor(text, text, bigint, bigint, text, text, text, text, text, real, integer, boolean, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) RETURNS integer
+CREATE FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -266,13 +266,13 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) OWNER TO postgres;
+ALTER FUNCTION public.fn_register_instructor(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean, p_area text) OWNER TO postgres;
 
 --
 -- Name: fn_register_staff(text, text, bigint, bigint, text, text, text, text, text, real, integer, boolean); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) RETURNS integer
+CREATE FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -305,13 +305,13 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) OWNER TO postgres;
+ALTER FUNCTION public.fn_register_staff(p_name text, p_email_pessoal text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_docente text, p_salario real, p_anos_servico integer, p_active boolean) OWNER TO postgres;
 
 --
 -- Name: fn_register_student(text, text, bigint, bigint, text, text, text, text, text, real); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.fn_register_student(p_name text, p_email text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) RETURNS integer
+CREATE FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -341,7 +341,7 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_register_student(p_name text, p_email text, p_cc bigint, p_nif bigint, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) OWNER TO postgres;
+ALTER FUNCTION public.fn_register_student(p_name text, p_email text, p_cc text, p_nif text, p_gender text, p_phone text, p_password text, p_email_inst text, p_numero_estudante text, p_average real) OWNER TO postgres;
 
 --
 -- Name: get_course_editions_by_degree(integer); Type: FUNCTION; Schema: public; Owner: postgres
@@ -461,7 +461,7 @@ BEGIN
 
     IF has_cycle THEN
         RAISE EXCEPTION
-          'Inserção inválida: criar % → % introduz um ciclo de pré-requisitos',
+          'invalid insertion : creating % → % creates a cycle',
           NEW.course, NEW.req_course;
     END IF;
 
@@ -875,8 +875,8 @@ ALTER VIEW public.passed_students_by_edition OWNER TO aulaspl;
 CREATE TABLE public.person (
     id integer NOT NULL,
     name text NOT NULL,
-    nif bigint NOT NULL,
-    cc bigint NOT NULL,
+    nif text NOT NULL,
+    cc text NOT NULL,
     email_pessoal character varying(128) NOT NULL,
     phone character(16) NOT NULL,
     gender character(1) NOT NULL,

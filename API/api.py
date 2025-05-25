@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask import request, jsonify
 from functools import wraps
 from config import Config
+from psycopg.errors import UniqueViolation, ForeignKeyViolation, CheckViolation
 
 app = flask.Flask(__name__)
 app.config.from_object(Config)
@@ -184,6 +185,9 @@ def register_staff():
         ), 400
 
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
+    hashed_cc = bcrypt.generate_password_hash(data["cc"]).decode()
+    hashed_nif = bcrypt.generate_password_hash(data["nif"]).decode()
+
     conn = db_connection()
     cur = conn.cursor()
     try:
@@ -192,8 +196,8 @@ def register_staff():
             (
                 data["name"],
                 data["email"],
-                data["cc"],
-                data["nif"],
+                hashed_cc,
+                hashed_nif,
                 data["gender"],
                 data["phone"],
                 hashed_pw,
@@ -225,6 +229,14 @@ def register_staff():
                 },
             }
         ), 200
+    except UniqueViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": "There is a staff with the same information, please check cc, nif, email institucional, email, and numero de docente",
+                "results": None,
+            }
+        ), 500
     except Exception as e:
         conn.rollback()
         logging.error(f"POST /register/staff - error: {e}")
@@ -269,6 +281,9 @@ def register_student():
         ), 400
 
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
+    hashed_cc = bcrypt.generate_password_hash(data["cc"]).decode()
+    hashed_nif = bcrypt.generate_password_hash(data["nif"]).decode()
+
     conn = db_connection()
     cur = conn.cursor()
     try:
@@ -277,8 +292,8 @@ def register_student():
             (
                 data["name"],
                 data["email"],
-                data["cc"],
-                data["nif"],
+                hashed_cc,
+                hashed_nif,
                 data["gender"],
                 data["phone"],
                 hashed_pw,
@@ -308,6 +323,14 @@ def register_student():
                 },
             }
         ), 200
+    except UniqueViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": "There is a student with the same information, please check cc, nif, email institucional, email, and student number",
+                "results": None,
+            }
+        ), 500
     except Exception as e:
         conn.rollback()
         logging.error(f"POST /register/student - error: {e}")
@@ -392,6 +415,8 @@ def register_instructor():
         ), 400
 
     hashed_pw = bcrypt.generate_password_hash(data["password"]).decode()
+    hashed_cc = bcrypt.generate_password_hash(data["cc"]).decode()
+    hashed_nif = bcrypt.generate_password_hash(data["nif"]).decode()
     conn = db_connection()
     cur = conn.cursor()
     try:
@@ -400,8 +425,8 @@ def register_instructor():
             (
                 data["name"],
                 data["email"],
-                data["cc"],
-                data["nif"],
+                hashed_cc,
+                hashed_nif,
                 data["gender"],
                 data["phone"],
                 hashed_pw,
@@ -434,6 +459,15 @@ def register_instructor():
                 },
             }
         ), 200
+    except UniqueViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["internal_error"],
+                "errors": "There is an instructor with the same information, please check cc, nif, email institucional, email, and numero de docente",
+                "results": None,
+            }
+        ), 500
+
     except Exception as e:
         conn.rollback()
         logging.error(f"POST /register-instructor - error: {e}")
@@ -551,6 +585,7 @@ def show_top_students():
         }
     return flask.jsonify(response)
 
+
 @app.route("/dbproj/degree_details/<degree_id>", methods=["GET"])
 @staff_required
 def view_degree_info(degree_id):
@@ -558,38 +593,38 @@ def view_degree_info(degree_id):
     cur = conn.cursor()
     response = None
     try:
-            cur.execute(
-                """
+        cur.execute(
+            """
                 SELECT * FROM get_course_editions_by_degree(%s) 
                 """,
-                (degree_id,),
-            )
-            rows = cur.fetchall()
-        
-            if not rows:
-                return {"status": "error", "message": "No data found"}
-        
-            first_row = rows[0]
-            last_column_values = [row[-1] for row in rows]
-        
-            response = {
-                "first_row": {
-                    "course_id": first_row[0],
-                    "course_name": first_row[1],
-                    "degree_id": first_row[2],
-                    "ano": first_row[3],
-                    "total_capacity": first_row[4],
-                    "degree_count": first_row[5],
-                    "passed_students": first_row[6],
-                    "coordinator": first_row[7],
-                    "instructors": last_column_values 
-                },
-            }
+            (degree_id,),
+        )
+        rows = cur.fetchall()
+
+        if not rows:
+            return {"status": "error", "message": "No data found"}
+
+        first_row = rows[0]
+        last_column_values = [row[-1] for row in rows]
+
+        response = {
+            "first_row": {
+                "course_id": first_row[0],
+                "course_name": first_row[1],
+                "degree_id": first_row[2],
+                "ano": first_row[3],
+                "total_capacity": first_row[4],
+                "degree_count": first_row[5],
+                "passed_students": first_row[6],
+                "coordinator": first_row[7],
+                "instructors": last_column_values,
+            },
+        }
 
     except (
         Exception,
         psycopg3.DatabaseError,
-    ) as error:  
+    ) as error:
         response = {
             "status": StatusCodes["internal_error"],
             "errors": str(error),
@@ -598,6 +633,7 @@ def view_degree_info(degree_id):
         if conn is not None:
             conn.close()
     return flask.jsonify(response)
+
 
 @app.route("/dbproj/enroll_degree/<int:degree_id>", methods=["POST"])
 @staff_required
@@ -620,6 +656,20 @@ def enroll_degree(degree_id):
         )
         conn.commit()
         return jsonify({"status": StatusCodes["success"], "errors": None}), 200
+    except UniqueViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Student already enrolled in this degree",
+            }
+        ), 400
+    except ForeignKeyViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Degree or student not found",
+            }
+        ), 400
     except Exception as e:
         conn.rollback()
         logging.error(f"POST /enroll_degree error: {e}")
@@ -640,6 +690,20 @@ def enroll_activity(activity_id):
         )
         conn.commit()
         return jsonify({"status": StatusCodes["success"], "errors": None}), 200
+    except UniqueViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "You are already enrolled in this activity",
+            }
+        ), 400
+    except ForeignKeyViolation:
+        return jsonify(
+            {
+                "status": StatusCodes["api_error"],
+                "errors": "Activity not found",
+            }
+        ), 400
     except Exception as e:
         conn.rollback()
         logging.error(f"POST /enroll_activity error: {e}")
@@ -770,7 +834,9 @@ def generate_report():
 
         results = []
         for row in cur.fetchall():
-            results.append({"Edição": row[0],"Mês" : row[1], "Alunos Admitidos": row[2]})
+            results.append(
+                {"Edição": row[0], "Mês": row[1], "Alunos Admitidos": row[2]}
+            )
 
         return flask.jsonify({"status": StatusCodes["success"], "results": results})
 
@@ -874,6 +940,7 @@ def submit_grades(edition_id):
         cur.close()
         conn.close()
 
+
 @app.route("/dbproj/student_details/<int:student_id>", methods=["GET"])
 def student_details(student_id):
     conn = db_connection()
@@ -889,23 +956,24 @@ def student_details(student_id):
             response = {
                 "status": StatusCodes["api_error"],
                 "errors": "Student has no courses or doesn't exist",
-                "results": []
+                "results": [],
             }
         else:
             # Build course list with proper JSON structure
             courses = []
             for row in rows:
-                courses.append({
-                    "course_edition_id": row[0],  # course_id from query
-                    "course_name": row[1],         # course_name from query
-                    "course_edition_year": row[2], # edition_year from query
-                    "grade": float(row[3]) if row[3] else None  # Handle numeric(5,2) grade
-                })
+                courses.append(
+                    {
+                        "course_edition_id": row[0],  # course_id from query
+                        "course_name": row[1],  # course_name from query
+                        "course_edition_year": row[2],  # edition_year from query
+                        "grade": float(row[3])
+                        if row[3]
+                        else None,  # Handle numeric(5,2) grade
+                    }
+                )
 
-            response = {
-                "status": StatusCodes["success"],
-                "results": courses
-            }
+            response = {"status": StatusCodes["success"], "results": courses}
 
         conn.commit()
 
@@ -914,7 +982,7 @@ def student_details(student_id):
         response = {
             "status": StatusCodes["internal_error"],
             "errors": str(e),
-            "results": []
+            "results": [],
         }
     finally:
         if cur is not None:
@@ -923,6 +991,7 @@ def student_details(student_id):
             conn.close()
 
     return flask.jsonify(response)
+
 
 if __name__ == "__main__":
     logging.basicConfig(filename="log_file.log")
